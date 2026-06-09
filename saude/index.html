@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Saúde — CaixaLike. Clínicas, farmácias e bem-estar. Pague via PIX ou Criptomoeda.">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Saúde — CaixaLike</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-mark">CaixaLike</div>
+  <h1>🏥 Saúde</h1>
+  <p>Clínicas, farmácias e bem-estar</p>
+</header>
+
+<div class="container">
+  <a href="../" class="back-link">← Voltar ao Portal</a>
+
+  <!-- ① MÓDULO DE VALOR PIX -->
+  <div class="valor-module">
+    <label for="valorPix">Qual valor deseja pagar?</label>
+    <input
+      type="text"
+      id="valorPix"
+      placeholder="0,00"
+      inputmode="decimal"
+      maxlength="12"
+      autocomplete="off"
+    >
+    <p class="hint">Digite o valor — o QR Code é gerado automaticamente</p>
+  </div>
+
+  <!-- ② ÁREA PIX DINÂMICO (visível após digitar valor) -->
+  <div id="pixArea" class="payment-panel" style="display:none;">
+    <div class="panel-title">
+      📱 Pagamento via PIX
+      <span class="panel-badge">Instantâneo</span>
+    </div>
+    <p class="amount-display" id="valorDisplay"></p>
+
+    <div class="pay-cols">
+      <!-- QR Code -->
+      <div class="pay-block" style="text-align:center;">
+        <h4>QR Code</h4>
+        <div id="qrcode-pix" class="qr-wrap"></div>
+        <p style="font-size:13px;color:#888;margin-top:10px;">Abra o app do banco e escaneie</p>
+      </div>
+
+      <!-- Copia e Cola -->
+      <div class="pay-block">
+        <h4>PIX Copia e Cola</h4>
+        <p style="font-size:13px;color:#666;margin-bottom:12px;">
+          Copie o código abaixo e cole no seu app bancário em "Pagar com PIX".
+        </p>
+        <div class="copy-row">
+          <input type="text" id="pixCodigo" readonly placeholder="Código PIX aparece aqui...">
+          <button class="btn-copy" id="btnCopy" onclick="copiarPix()">Copiar</button>
+        </div>
+        <p class="confirm-msg" id="confirmacao"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ÁREA CRIPTOMOEDAS -->
+  <div class="payment-panel">
+    <div class="panel-title">
+      🪙 Pagamento em Criptomoedas
+      <span class="panel-badge crypto">USDC</span>
+    </div>
+    <p style="margin-bottom:20px;font-size:14px;color:#666;">
+      Pagamento descentralizado. Envie <strong>USDC</strong> na rede correta.
+    </p>
+
+    <div class="pay-cols">
+
+      <!-- Polygon -->
+      <div class="pay-block">
+        <h4>Polygon Network (MATIC)</h4>
+        <p style="font-size:13px;color:#666;margin-bottom:8px;">
+          <strong>Ativo aceito:</strong> USDC (ERC-20 / Polygon)
+        </p>
+        <p style="font-size:13px;color:#666;margin-bottom:4px;font-weight:600;">Endereço:</p>
+        <div class="crypto-address" id="endereco-polygon">Carregando…</div>
+        <div id="qrcode-polygon" class="qr-wrap"></div>
+        <div class="risk-note">
+          ⚠️ Envie APENAS USDC na rede Polygon.<br>Outros ativos ou redes resultam em perda irreversível.
+        </div>
+      </div>
+
+      <!-- Solana -->
+      <div class="pay-block">
+        <h4>Solana Network (SOL)</h4>
+        <p style="font-size:13px;color:#666;margin-bottom:8px;">
+          <strong>Ativo aceito:</strong> USDC (SPL / Solana)
+        </p>
+        <p style="font-size:13px;color:#666;margin-bottom:4px;font-weight:600;">Endereço:</p>
+        <div class="crypto-address" id="endereco-solana">Carregando…</div>
+        <div id="qrcode-solana" class="qr-wrap"></div>
+        <div class="risk-note">
+          ⚠️ Envie APENAS USDC na rede Solana.<br>Outros ativos ou redes resultam em perda irreversível.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  CaixaLike © 2026 — Portal de Direcionamento Inteligente<br>
+  Parcerias: <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445‑9259</a>
+</footer>
+
+<script src="../js/pagamentos.js"></script>
+
+</body>
+</html>
