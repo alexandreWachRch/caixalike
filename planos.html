@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CaixaLike — Planos de Assinatura para Sites Profissionais. Comercial, Corporativo, Empresarial e E-commerce.">
+<meta name="theme-color" content="#0A0A0A">
+<title>CaixaLike — Planos de Assinatura</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E63946;
+    --red-dark: #c0303b;
+    --black: #0A0A0A;
+    --surface: #111111;
+    --surface2: #1A1A1A;
+    --border: rgba(255,255,255,0.08);
+    --text: #FFFFFF;
+    --muted: rgba(255,255,255,0.45);
+    --radius: 12px;
+    --green: #25D366;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-header a { text-decoration: none; }
+  .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; color: #fff; }
+  .logo span { color: var(--red); }
+  .logo-sub { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1px; }
+  .nav-back {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+  }
+  .nav-back:hover { color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 72px 24px 56px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(230,57,70,0.15);
+    color: var(--red);
+    border: 1px solid rgba(230,57,70,0.3);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero p {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── PLANOS GRID ── */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .plan-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .plan-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .plan-card.featured {
+    border-color: var(--red);
+    border-width: 2px;
+  }
+  .plan-card.selected {
+    border-color: var(--red) !important;
+    background: rgba(230,57,70,0.07);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .plan-icon { font-size: 32px; margin-bottom: 12px; }
+  .plan-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .plan-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .plan-price {
+    margin-bottom: 20px;
+  }
+  .plan-price .from { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .plan-price .range {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .plan-price .range span { color: var(--red); }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .plan-features li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .plan-features li::before {
+    content: '✓';
+    color: var(--red);
+    font-weight: 900;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .btn-select {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-select:hover { border-color: var(--red); color: var(--red); }
+  .plan-card.selected .btn-select {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+
+  /* ── FORMULÁRIO ── */
+  .form-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 36px;
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+
+  .form-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .form-section p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--red); }
+  .form-group select option { background: #1A1A1A; }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+  .selected-plan-display {
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--red);
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: none;
+  }
+  .selected-plan-display.visible { display: block; }
+
+  .btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    margin-top: 8px;
+  }
+  .btn-submit:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-submit:active { transform: scale(0.99); }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  /* ── VIP SECTION ── */
+  .vip-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto 60px;
+  }
+  @media (max-width: 520px) { .vip-section { grid-template-columns: 1fr; } }
+
+  .vip-card {
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+    display: block;
+  }
+  .vip-card:hover { transform: translateY(-2px); opacity: 0.9; }
+  .vip-card.whatsapp { background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.25); }
+  .vip-card.instagram { background: rgba(225,48,108,0.1); border: 1px solid rgba(225,48,108,0.3); }
+  .vip-icon { font-size: 28px; margin-bottom: 8px; }
+  .vip-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+  .vip-card.whatsapp .vip-title { color: #25D366; }
+  .vip-card.instagram .vip-title { color: #E1306C; }
+  .vip-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── SUCESSO ── */
+  #success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  #success-screen.visible { display: block; }
+  .success-icon { font-size: 64px; margin-bottom: 20px; }
+  .success-title { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .success-desc { font-size: 16px; color: var(--muted); margin-bottom: 36px; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .success-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-vip-wpp {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #25D366; color: #fff; padding: 14px 24px;
+    border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 15px;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn-vip-wpp:hover { background: #1ebe59; transform: translateY(-1px); }
+  .btn-vip-ig {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #fff; padding: 14px 24px;
+    border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 15px;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .btn-vip-ig:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .site-footer a { color: var(--muted); }
+  .site-footer a:hover { color: #fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .form-section { padding: 28px 20px; }
+    .hero { padding: 48px 20px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" style="text-decoration:none;">
+    <div class="logo">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
+  <a href="index.html" class="nav-back">← Voltar ao portal</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Planos de Assinatura</div>
+  <h1>Seu site profissional <span>pronto para vender</span></h1>
+  <p>Escolha o plano ideal para o seu negócio e entre automaticamente para o grupo VIP de clientes.</p>
+</section>
+
+<div class="container">
+
+  <!-- PLANOS -->
+  <div class="plans-grid" id="plans-grid">
+
+    <div class="plan-card" data-plan="Comercial" data-price="R$ 299 – R$ 499" onclick="selectPlan(this)">
+      <div class="plan-icon">🏪</div>
+      <div class="plan-name">Comercial</div>
+      <div class="plan-desc">Ideal para pequenos comércios e autônomos</div>
+      <div class="plan-price">
+        <div class="from">A partir de</div>
+        <div class="range">R$ 299 <span>— R$ 499</span></div>
+      </div>
+      <ul class="plan-features">
+        <li>Site responsivo de até 5 páginas</li>
+        <li>Integração PIX + WhatsApp</li>
+        <li>Domínio e hospedagem 1º ano</li>
+        <li>Suporte por 30 dias</li>
+      </ul>
+      <button class="btn-select">Selecionar este plano</button>
+    </div>
+
+    <div class="plan-card featured" data-plan="Corporativo" data-price="R$ 499 – R$ 899" onclick="selectPlan(this)">
+      <div class="plan-badge">Mais contratado</div>
+      <div class="plan-icon">🏢</div>
+      <div class="plan-name">Corporativo</div>
+      <div class="plan-desc">Para empresas que querem crescer online</div>
+      <div class="plan-price">
+        <div class="from">A partir de</div>
+        <div class="range">R$ 499 <span>— R$ 899</span></div>
+      </div>
+      <ul class="plan-features">
+        <li>Site completo de até 10 páginas</li>
+        <li>Blog, catálogo e formulários</li>
+        <li>Integração com redes sociais</li>
+        <li>SEO básico incluído</li>
+        <li>Suporte por 60 dias</li>
+      </ul>
+      <button class="btn-select">Selecionar este plano</button>
+    </div>
+
+    <div class="plan-card" data-plan="Empresarial" data-price="R$ 899 – R$ 1.499" onclick="selectPlan(this)">
+      <div class="plan-icon">🏭</div>
+      <div class="plan-name">Empresarial</div>
+      <div class="plan-desc">Solução completa para médias empresas</div>
+      <div class="plan-price">
+        <div class="from">A partir de</div>
+        <div class="range">R$ 899 <span>— R$ 1.499</span></div>
+      </div>
+      <ul class="plan-features">
+        <li>Site ilimitado com painel admin</li>
+        <li>Sistema de agendamento online</li>
+        <li>Integração Google Analytics</li>
+        <li>Email corporativo incluso</li>
+        <li>Suporte por 90 dias</li>
+      </ul>
+      <button class="btn-select">Selecionar este plano</button>
+    </div>
+
+    <div class="plan-card" data-plan="E-commerce" data-price="R$ 1.499 – R$ 4.999" onclick="selectPlan(this)">
+      <div class="plan-icon">🛒</div>
+      <div class="plan-name">E-commerce</div>
+      <div class="plan-desc">Loja virtual completa e pronta para vender</div>
+      <div class="plan-price">
+        <div class="from">A partir de</div>
+        <div class="range">R$ 1.499 <span>— R$ 4.999</span></div>
+      </div>
+      <ul class="plan-features">
+        <li>Loja com catálogo ilimitado</li>
+        <li>Checkout PIX, cartão e boleto</li>
+        <li>Painel de pedidos e estoque</li>
+        <li>Integração Correios + transportadoras</li>
+        <li>Suporte premium por 6 meses</li>
+      </ul>
+      <button class="btn-select">Selecionar este plano</button>
+    </div>
+
+  </div>
+
+  <!-- VIP LINKS (sempre visíveis) -->
+  <div class="vip-section">
+    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="vip-card whatsapp">
+      <div class="vip-icon">💬</div>
+      <div class="vip-title">Grupo VIP WhatsApp</div>
+      <div class="vip-desc">Ofertas e novidades exclusivas para clientes</div>
+    </a>
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card instagram">
+      <div class="vip-icon">📸</div>
+      <div class="vip-title">Canal VIP Instagram</div>
+      <div class="vip-desc">Conteúdo exclusivo e bastidores do CaixaLike</div>
+    </a>
+  </div>
+
+  <!-- FORMULÁRIO DE CADASTRO -->
+  <div class="form-section" id="form-section">
+    <h2>Solicitar contratação</h2>
+    <p>Preencha seus dados abaixo. Entraremos em contato em até 24h pelo WhatsApp.</p>
+
+    <div class="selected-plan-display" id="selected-plan-display">
+      ✓ Plano selecionado: <span id="selected-plan-name"></span> — <span id="selected-plan-price"></span>
+    </div>
+
+    <!-- FormSubmit — substitua o e-mail abaixo pelo seu -->
+    <form id="cadastro-form" action="https://formsubmit.co/SEU_EMAIL@gmail.com" method="POST">
+
+      <!-- Configurações FormSubmit -->
+      <input type="hidden" name="_subject" value="🔥 Nova contratação CaixaLike">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="">
+      <input type="hidden" name="plano" id="form-plano" value="">
+      <input type="hidden" name="faixa_preco" id="form-preco" value="">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome">Nome completo *</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp *</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="(47) 9 9999-9999" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="plano-select">Plano desejado *</label>
+          <select id="plano-select" name="plano_escolhido" required>
+            <option value="">Selecione um plano</option>
+            <option value="Comercial — R$ 299 a R$ 499">Comercial — R$ 299 a R$ 499</option>
+            <option value="Corporativo — R$ 499 a R$ 899">Corporativo — R$ 499 a R$ 899</option>
+            <option value="Empresarial — R$ 899 a R$ 1.499">Empresarial — R$ 899 a R$ 1.499</option>
+            <option value="E-commerce — R$ 1.499 a R$ 4.999">E-commerce — R$ 1.499 a R$ 4.999</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoria do negócio *</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecione</option>
+            <option>Alimentação</option>
+            <option>Saúde e Bem-estar</option>
+            <option>Mercado / Varejo</option>
+            <option>Pet</option>
+            <option>Financeiro</option>
+            <option>Negócios / Serviços</option>
+            <option>Profissional Liberal</option>
+            <option>Automotivo</option>
+            <option>E-commerce</option>
+            <option>Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Sobre seu negócio (opcional)</label>
+        <textarea id="descricao" name="descricao" placeholder="Conte brevemente o que você faz e o que precisa no site..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        Enviar solicitação
+      </button>
+
+      <p class="form-note">Após o envio, acesse os grupos VIP acima. Nenhum dado é compartilhado com terceiros.</p>
+    </form>
+
+    <!-- Tela de sucesso (fallback JS) -->
+    <div id="success-screen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Solicitação enviada!</div>
+      <div class="success-desc">Recebemos seu cadastro. Entraremos em contato pelo WhatsApp em até 24 horas. Agora acesse os grupos VIP!</div>
+      <div class="success-btns">
+        <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="btn-vip-wpp">
+          💬 Grupo VIP WhatsApp
+        </a>
+        <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="btn-vip-ig">
+          📸 Canal Instagram
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  CaixaLike © 2026 — Portal de Direcionamento Inteligente<br>
+  Contato: <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+</footer>
+
+<script>
+  function selectPlan(card) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    const name = card.dataset.plan;
+    const price = card.dataset.price;
+
+    document.getElementById('form-plano').value = name;
+    document.getElementById('form-preco').value = price;
+    document.getElementById('selected-plan-name').textContent = name;
+    document.getElementById('selected-plan-price').textContent = price;
+    document.getElementById('selected-plan-display').classList.add('visible');
+
+    const sel = document.getElementById('plano-select');
+    for (let opt of sel.options) {
+      if (opt.value.startsWith(name)) { sel.value = opt.value; break; }
+    }
+
+    document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.getElementById('plano-select').addEventListener('change', function() {
+    const val = this.value;
+    if (!val) return;
+    const name = val.split(' — ')[0];
+    const price = val.split(' — ')[1] || '';
+    document.querySelectorAll('.plan-card').forEach(c => {
+      c.classList.remove('selected');
+      if (c.dataset.plan === name) c.classList.add('selected');
+    });
+    document.getElementById('form-plano').value = name;
+    document.getElementById('form-preco').value = price;
+    document.getElementById('selected-plan-name').textContent = name;
+    document.getElementById('selected-plan-price').textContent = price;
+    document.getElementById('selected-plan-display').classList.add('visible');
+  });
+
+  // Se FormSubmit redirecionar de volta com ?enviado=1, mostrar sucesso
+  if (window.location.search.includes('enviado=1')) {
+    document.getElementById('cadastro-form').style.display = 'none';
+    document.getElementById('success-screen').classList.add('visible');
+  }
+
+  // Atualizar o _next do FormSubmit dinamicamente
+  const nextUrl = window.location.href.split('?')[0] + '?enviado=1';
+  document.querySelector('input[name="_next"]').value = nextUrl;
+
+  // Máscara simples para WhatsApp
+  document.getElementById('whatsapp').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 11);
+    if (v.length >= 7) v = '(' + v.substring(0,2) + ') ' + v.substring(2,7) + '-' + v.substring(7);
+    else if (v.length >= 2) v = '(' + v.substring(0,2) + ') ' + v.substring(2);
+    e.target.value = v;
+  });
+</script>
+
+</body>
+</html>
