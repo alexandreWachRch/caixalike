@@ -8,6 +8,47 @@
   <title>Pagamento — CaixaLike</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    .crypto-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .crypto-card-full {
+      grid-column: 1 / -1;
+    }
+    .stellar-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .tag-box {
+      background: rgba(230,57,70,.08);
+      border: 1px solid rgba(230,57,70,.25);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+    .tag-box .tag-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--red); margin-bottom: 6px;
+    }
+    .tag-box .tag-value {
+      font-size: 22px; font-weight: 900; letter-spacing: .12em;
+      font-family: var(--mono); color: #fff; margin-bottom: 8px;
+    }
+    .tag-warn {
+      font-size: 12px; font-weight: 700; color: #ff6060;
+      background: rgba(255,60,60,.07); border: 1px solid rgba(255,60,60,.2);
+      border-radius: 7px; padding: 10px 14px; margin-top: 10px; line-height: 1.6;
+    }
+    @media(max-width:640px){
+      .crypto-grid-3 { grid-template-columns: 1fr; }
+      .crypto-card-full { grid-column: 1; }
+      .stellar-inner { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -36,9 +77,7 @@
 
   <div class="pay-block">
     <h2>💳 Formas de pagamento</h2>
-    <p class="pay-sub">Pague com segurança via PIX (instantâneo) ou criptomoeda (USDC).</p>
-
-    <!-- Plano selecionado -->
+    <p class="pay-sub">Pague com segurança via PIX (instantâneo) ou criptomoeda.</p>
     <div class="selected-pill" id="selected-pill"></div>
 
     <!-- ① PIX DINÂMICO -->
@@ -46,17 +85,9 @@
       <h3>📱 PIX <span class="badge-pix">Instantâneo</span></h3>
       <div class="valor-row">
         <span class="valor-label">Valor R$</span>
-        <input
-          class="valor-input"
-          type="text"
-          id="valorPix"
-          placeholder="0,00"
-          inputmode="decimal"
-          maxlength="12"
-          autocomplete="off"
-        >
+        <input class="valor-input" type="text" id="valorPix"
+          placeholder="0,00" inputmode="decimal" maxlength="12" autocomplete="off">
       </div>
-
       <div class="pix-result" id="pixResult">
         <div class="pix-value-tag" id="pixValueTag"></div>
         <div class="pix-cols">
@@ -77,22 +108,22 @@
 
     <!-- ② CRIPTOMOEDAS + KYC -->
     <div class="crypto-module">
-      <h3>🪙 Criptomoedas <span class="badge-crypto">USDC</span></h3>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:0">
-        Pague com USDC via Polygon ou Solana. Identificação obrigatória antes de visualizar os endereços.
+      <h3>🪙 Criptomoedas <span class="badge-crypto">USDC · XLM</span></h3>
+      <p style="font-size:13px;color:var(--muted)">
+        Pague com USDC (Polygon / Solana) ou XLM (Stellar).
+        Identificação obrigatória antes de visualizar os endereços.
       </p>
 
       <!-- FORMULÁRIO KYC -->
       <div class="kyc-gate" id="kyc-gate">
         <h4>🔐 Identificação obrigatória</h4>
-        <p>Por regulação brasileira (Receita Federal / Banco Central), seus dados são exigidos para rastreabilidade da operação. Os endereços serão liberados após o envio.</p>
+        <p>Por regulação brasileira (Receita Federal / Banco Central), seus dados são exigidos
+           para rastreabilidade da operação. Os endereços serão liberados após o envio.</p>
 
-        <form
-          id="kyc-form"
+        <form id="kyc-form"
           action="https://formsubmit.co/aquileslabor@gmail.com"
           method="POST"
-          onsubmit="handleKycSubmit(event)"
-        >
+          onsubmit="handleKycSubmit(event)">
           <input type="hidden" name="_subject"  value="🪙 Identificação Cripto — CaixaLike">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha"  value="false">
@@ -104,7 +135,8 @@
             </div>
             <div class="fgroup">
               <label>CPF *</label>
-              <input type="text" name="cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" oninput="maskCPF(this)" required>
+              <input type="text" name="cpf" placeholder="000.000.000-00"
+                maxlength="14" inputmode="numeric" oninput="maskCPF(this)" required>
             </div>
           </div>
           <div class="frow">
@@ -120,14 +152,14 @@
 
           <div class="form-error" id="kyc-error">⚠️ Preencha nome, CPF e e-mail para continuar.</div>
 
-          <button type="submit" id="kyc-btn" class="btn-submit" style="margin-top:4px">
+          <button type="submit" id="kyc-btn" class="btn-submit" style="margin-top:6px">
             🔓 Enviar dados e ver endereços de pagamento
           </button>
-          <p class="form-note">🔒 Dados enviados com segurança. Usados apenas para rastreabilidade da transação.</p>
+          <p class="form-note">🔒 Dados enviados com segurança. Usados apenas para rastreabilidade.</p>
         </form>
       </div>
 
-      <!-- ENDEREÇOS BLOQUEADOS (visual) -->
+      <!-- BLOQUEADO -->
       <div class="kyc-locked" id="kyc-locked">
         <span style="font-size:24px">🔒</span>
         <p>Endereços bloqueados — preencha o formulário acima para liberar</p>
@@ -143,21 +175,21 @@
           </div>
         </div>
 
-        <div class="crypto-cols">
+        <div class="crypto-grid-3">
 
           <!-- Polygon -->
           <div class="crypto-card">
             <h4>Polygon Network</h4>
             <p class="crypto-net-tag">USDC — ERC-20 / Polygon</p>
             <div class="crypto-qr-box">
-              <img src="../img/qr-polygon.jpg" alt="QR Code Polygon USDC">
+              <img src="../img/qr-polygon.jpg" alt="QR Code Polygon">
             </div>
-            <p class="addr-label">Endereço da carteira</p>
+            <p class="addr-label">Endereço</p>
             <div class="addr-row">
               <input class="addr-input" type="text" id="endereco-polygon" readonly>
               <button class="btn-addr" id="btn-polygon" onclick="copiarEndereco('endereco-polygon','btn-polygon')">Copiar</button>
             </div>
-            <div class="risk-note">⚠️ Envie APENAS USDC na rede Polygon. Outros ativos resultam em perda irreversível.</div>
+            <div class="risk-note">⚠️ Apenas USDC na rede Polygon.</div>
           </div>
 
           <!-- Solana -->
@@ -165,14 +197,56 @@
             <h4>Solana Network</h4>
             <p class="crypto-net-tag">USDC — SPL / Solana</p>
             <div class="crypto-qr-box">
-              <img src="../img/qr-solana.jpg" alt="QR Code Solana USDC">
+              <img src="../img/qr-solana.jpg" alt="QR Code Solana">
             </div>
-            <p class="addr-label">Endereço da carteira</p>
+            <p class="addr-label">Endereço</p>
             <div class="addr-row">
               <input class="addr-input" type="text" id="endereco-solana" readonly>
               <button class="btn-addr" id="btn-solana" onclick="copiarEndereco('endereco-solana','btn-solana')">Copiar</button>
             </div>
-            <div class="risk-note">⚠️ Envie APENAS USDC na rede Solana. Outros ativos resultam em perda irreversível.</div>
+            <div class="risk-note">⚠️ Apenas USDC na rede Solana.</div>
+          </div>
+
+          <!-- Stellar XLM — largura total -->
+          <div class="crypto-card crypto-card-full">
+            <h4>⭐ Stellar Network — XLM</h4>
+            <p class="crypto-net-tag">XLM — Rede Stellar · Taxa: Sem custo</p>
+
+            <div class="stellar-inner">
+              <!-- QR Code -->
+              <div class="crypto-qr-box">
+                <img src="../img/qr-stellar.jpg" alt="QR Code Stellar XLM"
+                  style="width:150px;height:150px;object-fit:contain">
+              </div>
+
+              <!-- Endereço + Tag -->
+              <div>
+                <p class="addr-label">Endereço da carteira</p>
+                <div class="addr-row" style="margin-bottom:14px">
+                  <input class="addr-input" type="text" id="endereco-stellar" readonly
+                    style="font-size:10px">
+                  <button class="btn-addr" id="btn-stellar"
+                    onclick="copiarEndereco('endereco-stellar','btn-stellar')">Copiar</button>
+                </div>
+
+                <!-- Destination Tag em destaque -->
+                <div class="tag-box">
+                  <div class="tag-label">⚠️ Destination Tag — OBRIGATÓRIO</div>
+                  <div class="tag-value" id="stellar-tag-display"></div>
+                  <div class="addr-row">
+                    <input class="addr-input" type="text" id="stellar-tag" readonly
+                      style="font-size:18px;font-weight:900;color:#fff;letter-spacing:.1em">
+                    <button class="btn-addr" id="btn-stellar-tag"
+                      onclick="copiarEndereco('stellar-tag','btn-stellar-tag')">Copiar Tag</button>
+                  </div>
+                </div>
+
+                <div class="tag-warn">
+                  🚨 <strong>ATENÇÃO:</strong> Sempre inclua o Destination Tag ao enviar XLM.<br>
+                  Transferências sem o tag resultam em <strong>perda permanente dos fundos</strong>.
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>

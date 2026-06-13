@@ -1,21 +1,24 @@
 /**
- * CaixaLike — Motor de Pagamentos v3.0
- * PIX EMV + QR Code + KYC Cripto
+ * CaixaLike — Motor de Pagamentos v3.1
+ * PIX EMV + QR Code + KYC Cripto (Polygon · Solana · Stellar)
  * Banco Central do Brasil — Padrão EMV v1.0
  */
 
 // ── CONFIGURAÇÃO CENTRAL ──────────────────────────────────────
-// Altere APENAS aqui. Todas as páginas herdam automaticamente.
 const CONFIG = {
   pix: {
     chave:    "aquileslabor@gmail.com",
-    nome:     "AQUILES LABOR",   // máx 25 chars — igual ao cadastro bancário
-    cidade:   "JOINVILLE",       // máx 15 chars, MAIÚSCULO
+    nome:     "AQUILES LABOR",
+    cidade:   "JOINVILLE",
     descricao:"CAIXALIKE"
   },
   crypto: {
     polygon: "0xF2c29b2ce60832524e6247683Cd3F1f6D7F50179",
-    solana:  "7CGxzbBKXpckGsZzfGtMdZ9dEYDVb261pvtMoNKgBgy5"
+    solana:  "7CGxzbBKXpckGsZzfGtMdZ9dEYDVb261pvtMoNKgBgy5",
+    stellar: {
+      address: "GA22MHPWUODDYFSQMQ3I6BJAHEJCDLEPOIYG5RP47LLIO3YV3KPSIVXV",
+      tag:     "88892579"
+    }
   },
   contato: {
     email:    "aquileslabor@gmail.com",
@@ -68,13 +71,13 @@ if (_pixInput) {
     this.value = v;
     const num = parseFloat(v.replace(",","."));
     if (!isNaN(num) && num > 0) {
-      const fmt = num.toFixed(2);
+      const fmt     = num.toFixed(2);
       const payload = gerarPayload(fmt);
-      const codeEl = document.getElementById("pixCodigo");
-      const tagEl  = document.getElementById("pixValueTag");
-      const resEl  = document.getElementById("pixResult");
-      const okEl   = document.getElementById("pixConfirm");
-      const btnEl  = document.getElementById("btnCopyPix");
+      const codeEl  = document.getElementById("pixCodigo");
+      const tagEl   = document.getElementById("pixValueTag");
+      const resEl   = document.getElementById("pixResult");
+      const okEl    = document.getElementById("pixConfirm");
+      const btnEl   = document.getElementById("btnCopyPix");
       if (codeEl) codeEl.value = payload;
       if (tagEl)  tagEl.textContent = "R$ " + num.toLocaleString("pt-BR",{minimumFractionDigits:2});
       gerarQR("qrcode-pix", payload);
@@ -101,10 +104,10 @@ function copiarPix() {
       if (btn) { btn.textContent="Copiar"; btn.classList.remove("copied"); }
       if (ok)  ok.classList.remove("visible");
     }, 3500);
-  }).catch(() => { code.select(); document.execCommand("copy"); });
+  }).catch(() => { if (code) { code.select(); document.execCommand("copy"); } });
 }
 
-// ── COPIAR ENDEREÇO CRIPTO ───────────────────────────────────
+// ── COPIAR ENDEREÇO / TAG ────────────────────────────────────
 function copiarEndereco(inputId, btnId) {
   const val = document.getElementById(inputId)?.value;
   const btn = document.getElementById(btnId);
@@ -142,40 +145,41 @@ function liberarCripto(email) {
   const locked  = document.getElementById("kyc-locked");
   const success = document.getElementById("kyc-unlocked");
   const msgEl   = document.getElementById("kyc-email-confirm");
+
   if (gate)    gate.style.display    = "none";
   if (locked)  locked.style.display  = "none";
   if (success) success.style.display = "block";
   if (msgEl)   msgEl.textContent = email ? `Confirmação enviada para: ${email}` : "Identificação confirmada.";
-  const elPoly = document.getElementById("endereco-polygon");
-  const elSol  = document.getElementById("endereco-solana");
-  if (elPoly) elPoly.textContent = CONFIG.crypto.polygon;
-  if (elSol)  elSol.textContent  = CONFIG.crypto.solana;
+
+  // Preenche endereços
+  const elPoly    = document.getElementById("endereco-polygon");
+  const elSol     = document.getElementById("endereco-solana");
+  const elStellar = document.getElementById("endereco-stellar");
+  const elTag     = document.getElementById("stellar-tag");
+  if (elPoly)    elPoly.value    = CONFIG.crypto.polygon;
+  if (elSol)     elSol.value     = CONFIG.crypto.solana;
+  if (elStellar) elStellar.value = CONFIG.crypto.stellar.address;
+  if (elTag)     elTag.value     = CONFIG.crypto.stellar.tag;
+
   if (success) success.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
 // ── MÁSCARAS ────────────────────────────────────────────────
 function maskCPF(el) {
   let v = el.value.replace(/\D/g,"").substring(0,11);
-  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,"$1.$2.$3-$4");
+  if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,"$1.$2.$3-$4");
   else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/,"$1.$2.$3");
   else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/,"$1.$2");
   el.value = v;
 }
 function maskPhone(el) {
   let v = el.value.replace(/\D/g,"").substring(0,11);
-  if (v.length >= 7) v = "("+v.substring(0,2)+") "+v.substring(2,7)+"-"+v.substring(7);
+  if (v.length >= 7)     v = "("+v.substring(0,2)+") "+v.substring(2,7)+"-"+v.substring(7);
   else if (v.length >= 2) v = "("+v.substring(0,2)+") "+v.substring(2);
   el.value = v;
 }
 
 // ── INIT ────────────────────────────────────────────────────
 window.addEventListener("load", () => {
-  // Sincroniza endereços de texto (se já estiver na área desbloqueada)
-  const elPoly = document.getElementById("endereco-polygon");
-  const elSol  = document.getElementById("endereco-solana");
-  if (elPoly) elPoly.textContent = CONFIG.crypto.polygon;
-  if (elSol)  elSol.textContent  = CONFIG.crypto.solana;
-
-  // Foco no campo PIX
   if (_pixInput) _pixInput.focus();
 });
