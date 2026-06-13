@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CaixaLike — Criação de sites profissionais, planos de assinatura e serviços digitais. Pague via PIX ou Cripto.">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>CaixaLike — Portal de Pagamentos</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/" class="logo">
+    <div class="logo-name">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
+  <nav class="header-nav">
+    <a href="/"          class="nav-link active">Início</a>
+    <a href="servicos/"  class="nav-link">Serviços</a>
+    <a href="planos/"    class="nav-link">Planos VIP</a>
+    <a href="contato/"   class="nav-link">Contato</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Criação de Sites Profissionais</div>
+  <h1>Seu site pronto para <span>vender</span></h1>
+  <p>Escolha o plano, pague via PIX ou Cripto e entre para o grupo VIP com ofertas exclusivas.</p>
+</section>
+
+<main class="container">
+
+  <!-- PLANOS DE CRIAÇÃO -->
+  <span class="section-label">Planos de criação</span>
+  <div class="plans-grid">
+
+    <div class="plan-card" onclick="irParaPagamento(this,'Comercial','R$ 299 a R$ 499')">
+      <div class="plan-icon">🏪</div>
+      <div class="plan-name">Comercial</div>
+      <div class="plan-range">R$ 299 — R$ 499</div>
+      <ul class="plan-feats">
+        <li>Site responsivo até 5 páginas</li>
+        <li>Integração PIX + WhatsApp</li>
+        <li>Domínio e hospedagem 1º ano</li>
+        <li>Suporte por 30 dias</li>
+      </ul>
+      <button class="btn-select-plan">Selecionar plano</button>
+    </div>
+
+    <div class="plan-card featured" onclick="irParaPagamento(this,'Corporativo','R$ 499 a R$ 899')">
+      <div class="plan-top-badge">⭐ Mais contratado</div>
+      <div class="plan-icon">🏢</div>
+      <div class="plan-name">Corporativo</div>
+      <div class="plan-range">R$ 499 — R$ 899</div>
+      <ul class="plan-feats">
+        <li>Site completo até 10 páginas</li>
+        <li>Blog, catálogo e formulários</li>
+        <li>Integração redes sociais</li>
+        <li>SEO básico incluído</li>
+        <li>Suporte por 60 dias</li>
+      </ul>
+      <button class="btn-select-plan">Selecionar plano</button>
+    </div>
+
+    <div class="plan-card" onclick="irParaPagamento(this,'Empresarial','R$ 899 a R$ 1.499')">
+      <div class="plan-icon">🏭</div>
+      <div class="plan-name">Empresarial</div>
+      <div class="plan-range">R$ 899 — R$ 1.499</div>
+      <ul class="plan-feats">
+        <li>Site ilimitado com painel admin</li>
+        <li>Sistema de agendamento online</li>
+        <li>Google Analytics integrado</li>
+        <li>E-mail corporativo incluso</li>
+        <li>Suporte por 90 dias</li>
+      </ul>
+      <button class="btn-select-plan">Selecionar plano</button>
+    </div>
+
+    <div class="plan-card" onclick="irParaPagamento(this,'E-commerce','R$ 1.499 a R$ 4.999')">
+      <div class="plan-icon">🛒</div>
+      <div class="plan-name">E-commerce</div>
+      <div class="plan-range">R$ 1.499 — R$ 4.999</div>
+      <ul class="plan-feats">
+        <li>Loja virtual com catálogo ilimitado</li>
+        <li>Checkout PIX, cartão e boleto</li>
+        <li>Painel de pedidos e estoque</li>
+        <li>Integração Correios + transportadoras</li>
+        <li>Suporte premium por 6 meses</li>
+      </ul>
+      <button class="btn-select-plan">Selecionar plano</button>
+    </div>
+
+  </div>
+
+  <!-- BANNER SERVIÇOS -->
+  <a href="servicos/" class="banner">
+    <div>
+      <div class="banner-badge">Serviços & Planos Mensais</div>
+      <h3>Manutenção · SEO · Segurança · Performance</h3>
+      <p>30+ serviços avulsos + planos mensais de R$ 29 a R$ 149/mês</p>
+    </div>
+    <span class="banner-arrow">→</span>
+  </a>
+
+  <!-- BANNER PLANOS VIP -->
+  <a href="planos/" class="banner" style="margin-top:10px">
+    <div>
+      <div class="banner-badge">Comunidade VIP</div>
+      <h3>Grupo WhatsApp + Canal Instagram exclusivos</h3>
+      <p>Ofertas, dicas e conteúdo premium a partir de R$ 29/mês</p>
+    </div>
+    <span class="banner-arrow">→</span>
+  </a>
+
+  <!-- COMUNIDADES VIP -->
+  <span class="section-label">Acesso direto</span>
+  <div class="vip-grid">
+    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="vip-card wpp">
+      <div class="vip-icon">💬</div>
+      <div class="vip-title">Grupo VIP WhatsApp</div>
+      <div class="vip-desc">Ofertas e novidades exclusivas</div>
+    </a>
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card ig">
+      <div class="vip-icon">📸</div>
+      <div class="vip-title">Canal VIP Instagram</div>
+      <div class="vip-desc">Conteúdo exclusivo e bastidores</div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  CaixaLike © 2026 — Portal de Pagamentos &nbsp;·&nbsp;
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+</footer>
+
+<script>
+function irParaPagamento(card, plano, preco) {
+  // Salva seleção e redireciona para página de pagamento
+  sessionStorage.setItem('plano_selecionado', plano);
+  sessionStorage.setItem('plano_preco', preco);
+  window.location.href = 'pagamento/?plano=' + encodeURIComponent(plano) + '&preco=' + encodeURIComponent(preco);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CaixaLike — Serviços de manutenção, SEO, segurança e planos mensais para seu site.">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Serviços — CaixaLike</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../" class="logo">
+    <div class="logo-name">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
+  <nav class="header-nav">
+    <a href="../"         class="nav-link">Início</a>
+    <a href="../servicos/" class="nav-link active">Serviços</a>
+    <a href="../planos/"  class="nav-link">Planos VIP</a>
+    <a href="../contato/" class="nav-link">Contato</a>
+  </nav>
+</header>
+
+<section class="hero" style="padding-bottom:24px">
+  <div class="hero-badge">Serviços Digitais</div>
+  <h1>Tudo para o seu site <span>funcionar</span></h1>
+  <p>Manutenção, segurança, SEO, performance e planos mensais. Clique em um serviço para contratar.</p>
+</section>
+
+<main class="container">
+
+  <a href="../" class="back-link">← Voltar ao início</a>
+
+  <!-- SERVIÇOS AVULSOS -->
+  <span class="section-label">Serviços avulsos</span>
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('man',this)">🔧 Manutenção</div>
+    <div class="tab" onclick="showTab('cont',this)">📝 Conteúdo</div>
+    <div class="tab" onclick="showTab('seg',this)">🔐 Segurança</div>
+    <div class="tab" onclick="showTab('perf',this)">⚡ Performance</div>
+    <div class="tab" onclick="showTab('mkt',this)">📈 Marketing & SEO</div>
+    <div class="tab" onclick="showTab('avul',this)">🧩 Avulsos</div>
+  </div>
+
+  <div class="svc-wrap">
+    <!-- Manutenção -->
+    <table class="svc-table" id="tab-man">
+      <thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('Atualização do site','R$ 20 a R$ 50',this)"><td>Atualização do site</td><td>Ajustes gerais, correções, melhorias</td><td>R$ 20 – R$ 50</td></tr>
+        <tr onclick="selSvc('Atualização de plugins (WordPress)','R$ 29/mês',this)"><td>Atualização de plugins</td><td>Segurança e compatibilidade</td><td>R$ 29/mês</td></tr>
+        <tr onclick="selSvc('Monitoramento 24/7','R$ 19/mês',this)"><td>Monitoramento 24/7</td><td>Verificar se o site está no ar</td><td>R$ 19/mês</td></tr>
+        <tr onclick="selSvc('Correção de erros','R$ 29 a R$ 99',this)"><td>Correção de erros</td><td>Bugs, links quebrados, falhas</td><td>R$ 29 – R$ 99</td></tr>
+        <tr onclick="selSvc('Otimização de imagens','R$ 29 a R$ 59',this)"><td>Otimização de imagens</td><td>Deixar o site mais rápido</td><td>R$ 29 – R$ 59</td></tr>
+      </tbody>
+    </table>
+    <!-- Conteúdo -->
+    <table class="svc-table" id="tab-cont" style="display:none">
+      <thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('Troca de textos','R$ 10 a R$ 30',this)"><td>Troca de textos</td><td>Atualizar informações no site</td><td>R$ 10 – R$ 30</td></tr>
+        <tr onclick="selSvc('Troca de fotos','R$ 10 a R$ 20',this)"><td>Troca de fotos</td><td>Substituir imagens existentes</td><td>R$ 10 – R$ 20</td></tr>
+        <tr onclick="selSvc('Nova seção','R$ 49 a R$ 149',this)"><td>Adicionar nova seção</td><td>Criar bloco novo no site</td><td>R$ 49 – R$ 149</td></tr>
+        <tr onclick="selSvc('Nova página','R$ 99 a R$ 299',this)"><td>Criar nova página</td><td>Página completa do zero</td><td>R$ 99 – R$ 299</td></tr>
+        <tr onclick="selSvc('Atualização de portfólio','R$ 29 a R$ 79',this)"><td>Atualização de portfólio</td><td>Adicionar novos trabalhos</td><td>R$ 29 – R$ 79</td></tr>
+      </tbody>
+    </table>
+    <!-- Segurança -->
+    <table class="svc-table" id="tab-seg" style="display:none">
+      <thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('Backup semanal','R$ 19/mês',this)"><td>Backup semanal</td><td>Cópia de segurança semanal</td><td>R$ 19/mês</td></tr>
+        <tr onclick="selSvc('Backup diário','R$ 29/mês',this)"><td>Backup diário</td><td>Alta segurança</td><td>R$ 29/mês</td></tr>
+        <tr onclick="selSvc('Proteção contra ataques','R$ 29/mês',this)"><td>Proteção contra ataques</td><td>Firewall e bloqueio de bots</td><td>R$ 29/mês</td></tr>
+        <tr onclick="selSvc('Recuperação de site hackeado','R$ 99 a R$ 299',this)"><td>Recuperação de site hackeado</td><td>Restaurar site comprometido</td><td>R$ 99 – R$ 299</td></tr>
+      </tbody>
+    </table>
+    <!-- Performance -->
+    <table class="svc-table" id="tab-perf" style="display:none">
+      <thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('Otimização de velocidade','R$ 49 a R$ 149',this)"><td>Otimização de velocidade</td><td>Acelerar carregamento do site</td><td>R$ 49 – R$ 149</td></tr>
+        <tr onclick="selSvc('Compressão de imagens','R$ 29',this)"><td>Compressão de imagens</td><td>Reduzir peso das imagens</td><td>R$ 29</td></tr>
+        <tr onclick="selSvc('Limpeza de cache','R$ 10',this)"><td>Limpeza de cache</td><td>Melhorar desempenho geral</td><td>R$ 10</td></tr>
+        <tr onclick="selSvc('Revisão completa de performance','R$ 99 a R$ 199',this)"><td>Revisão completa</td><td>Diagnóstico + ajustes</td><td>R$ 99 – R$ 199</td></tr>
+      </tbody>
+    </table>
+    <!-- Marketing -->
+    <table class="svc-table" id="tab-mkt" style="display:none">
+      <thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('SEO básico','R$ 49/mês',this)"><td>SEO básico</td><td>Ajustes simples de otimização</td><td>R$ 49/mês</td></tr>
+        <tr onclick="selSvc('SEO avançado','R$ 99 a R$ 299',this)"><td>SEO avançado</td><td>Palavras-chave e otimização completa</td><td>R$ 99 – R$ 299</td></tr>
+        <tr onclick="selSvc('Instalação de Pixel Meta','R$ 29',this)"><td>Pixel Meta</td><td>Instalação para rastreamento</td><td>R$ 29</td></tr>
+        <tr onclick="selSvc('Instalação Google Analytics','R$ 29',this)"><td>Google Analytics</td><td>Instalação para métricas</td><td>R$ 29</td></tr>
+        <tr onclick="selSvc('Criação de landing page','R$ 149 a R$ 399',this)"><td>Landing page</td><td>Página de vendas otimizada</td><td>R$ 149 – R$ 399</td></tr>
+      </tbody>
+    </table>
+    <!-- Avulsos -->
+    <table class="svc-table" id="tab-avul" style="display:none">
+      <thead><tr><th>Serviço</th><th>Preço</th></tr></thead>
+      <tbody>
+        <tr onclick="selSvc('Criação de logo','R$ 49 a R$ 149',this)"><td>Criação de logo</td><td>R$ 49 – R$ 149</td></tr>
+        <tr onclick="selSvc('Banner para site','R$ 29 a R$ 79',this)"><td>Banner para site</td><td>R$ 29 – R$ 79</td></tr>
+        <tr onclick="selSvc('Configuração de domínio','R$ 29 a R$ 59',this)"><td>Configuração de domínio</td><td>R$ 29 – R$ 59</td></tr>
+        <tr onclick="selSvc('Configuração de e-mail profissional','R$ 29 a R$ 79',this)"><td>E-mail profissional</td><td>R$ 29 – R$ 79</td></tr>
+        <tr onclick="selSvc('Instalação de chatbot','R$ 49 a R$ 149',this)"><td>Instalação de chatbot</td><td>R$ 49 – R$ 149</td></tr>
+        <tr onclick="selSvc('Integração WhatsApp API','R$ 99 a R$ 299',this)"><td>Integração WhatsApp API</td><td>R$ 99 – R$ 299</td></tr>
+        <tr onclick="selSvc('Integração Mercado Pago','R$ 49 a R$ 149',this)"><td>Integração Mercado Pago</td><td>R$ 49 – R$ 149</td></tr>
+        <tr onclick="selSvc('Integração Infitipay','R$ 49 a R$ 149',this)"><td>Integração Infitipay</td><td>R$ 49 – R$ 149</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PLANOS MENSAIS -->
+  <span class="section-label">Planos mensais — assinatura</span>
+  <div class="planos-grid">
+    <div class="plano-card" onclick="selSvc('Plano Básico','R$ 29/mês',null)">
+      <div class="plano-name">🔹 Básico</div>
+      <div class="plano-price">R$ 29<small>/mês</small></div>
+      <ul class="plano-feats">
+        <li>Hospedagem + SSL</li>
+        <li>1 atualização/mês</li>
+        <li>Backup semanal</li>
+      </ul>
+    </div>
+    <div class="plano-card pop" onclick="selSvc('Plano Profissional','R$ 49/mês',null)">
+      <div class="plano-top-badge">⭐ Mais popular</div>
+      <div class="plano-name">🔹 Profissional</div>
+      <div class="plano-price">R$ 49<small>/mês</small></div>
+      <ul class="plano-feats">
+        <li>Hospedagem + SSL</li>
+        <li>3 atualizações/mês</li>
+        <li>Backup semanal</li>
+        <li>Suporte prioritário</li>
+      </ul>
+    </div>
+    <div class="plano-card" onclick="selSvc('Plano Empresarial','R$ 79/mês',null)">
+      <div class="plano-name">🔹 Empresarial</div>
+      <div class="plano-price">R$ 79<small>/mês</small></div>
+      <ul class="plano-feats">
+        <li>Hospedagem + SSL</li>
+        <li>Atualizações ilimitadas</li>
+        <li>Backup diário</li>
+        <li>Monitoramento 24/7</li>
+      </ul>
+    </div>
+    <div class="plano-card" onclick="selSvc('Plano E-commerce','R$ 99 a R$ 149/mês',null)">
+      <div class="plano-name">🔹 E-commerce</div>
+      <div class="plano-price">R$ 99<small>–149/mês</small></div>
+      <ul class="plano-feats">
+        <li>Tudo ilimitado</li>
+        <li>Backup diário</li>
+        <li>Monitoramento 24/7</li>
+        <li>Suporte a integrações</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  CaixaLike © 2026 &nbsp;·&nbsp;
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+</footer>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.svc-table').forEach(t => t.style.display='none');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).style.display = '';
+  el.classList.add('active');
+}
+let activeRow = null;
+function selSvc(nome, preco, row) {
+  if (activeRow) activeRow.classList.remove('active');
+  if (row) { row.classList.add('active'); activeRow = row; }
+  sessionStorage.setItem('plano_selecionado', nome);
+  sessionStorage.setItem('plano_preco', preco);
+  window.location.href = '../pagamento/?plano=' + encodeURIComponent(nome) + '&preco=' + encodeURIComponent(preco);
+}
+</script>
+
+</body>
+</html>

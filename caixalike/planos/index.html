@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CaixaLike — Planos VIP com acesso ao grupo WhatsApp e canal Instagram exclusivos.">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Planos VIP — CaixaLike</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../" class="logo">
+    <div class="logo-name">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
+  <nav class="header-nav">
+    <a href="../"          class="nav-link">Início</a>
+    <a href="../servicos/" class="nav-link">Serviços</a>
+    <a href="../planos/"   class="nav-link active">Planos VIP</a>
+    <a href="../contato/"  class="nav-link">Contato</a>
+  </nav>
+</header>
+
+<section class="hero" style="padding-bottom:24px">
+  <div class="hero-badge">Comunidade VIP</div>
+  <h1>Acesso exclusivo <span>WhatsApp + Instagram</span></h1>
+  <p>Ofertas, dicas e conteúdo premium. Pague e entre automaticamente para os grupos VIP.</p>
+</section>
+
+<main class="container">
+
+  <a href="../" class="back-link">← Voltar ao início</a>
+
+  <!-- PLANOS VIP -->
+  <span class="section-label">Escolha seu plano</span>
+  <div class="plans-grid">
+
+    <div class="plan-card" onclick="selPlano(this,'Plano VIP Básico','R$ 29/mês')">
+      <div class="plan-icon">🥉</div>
+      <div class="plan-name">Básico</div>
+      <div class="plan-range">R$ 29/mês</div>
+      <ul class="plan-feats">
+        <li>Grupo WhatsApp VIP</li>
+        <li>Canal Instagram VIP</li>
+        <li>Ofertas diárias</li>
+      </ul>
+      <button class="btn-select-plan">Assinar</button>
+    </div>
+
+    <div class="plan-card featured" onclick="selPlano(this,'Plano VIP Pro','R$ 59/mês')">
+      <div class="plan-top-badge">⭐ Mais popular</div>
+      <div class="plan-icon">🥇</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-range">R$ 59/mês</div>
+      <ul class="plan-feats">
+        <li>Grupo WhatsApp VIP</li>
+        <li>Canal Instagram VIP</li>
+        <li>Ofertas diárias</li>
+        <li>Suporte prioritário</li>
+        <li>Conteúdo exclusivo premium</li>
+      </ul>
+      <button class="btn-select-plan">Assinar Pro</button>
+    </div>
+
+    <div class="plan-card" onclick="selPlano(this,'Plano VIP Anual','R$ 497/ano')">
+      <div class="plan-icon">🏆</div>
+      <div class="plan-name">Anual</div>
+      <div class="plan-range">R$ 497/ano</div>
+      <ul class="plan-feats">
+        <li>Grupo WhatsApp VIP</li>
+        <li>Canal Instagram VIP</li>
+        <li>Ofertas diárias</li>
+        <li>Suporte prioritário</li>
+        <li>Conteúdo exclusivo premium</li>
+        <li>Equivale a R$ 41/mês</li>
+      </ul>
+      <button class="btn-select-plan">Assinar Anual</button>
+    </div>
+
+  </div>
+
+  <!-- FORMULÁRIO DE CADASTRO -->
+  <span class="section-label" style="margin-top:48px">Cadastro</span>
+  <div class="form-card">
+    <h2>Solicitar acesso VIP</h2>
+    <p class="sub">Preencha seus dados. Após a confirmação do pagamento, o acesso é liberado imediatamente.</p>
+
+    <div class="form-pill" id="form-pill"></div>
+
+    <div id="form-body">
+      <form
+        action="https://formsubmit.co/aquileslabor@gmail.com"
+        method="POST"
+        onsubmit="handleFormSubmit(event)"
+      >
+        <input type="hidden" name="_subject"  value="🔥 Novo Plano VIP — CaixaLike">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha"  value="false">
+        <input type="hidden" name="plano"     id="input-plano" value="">
+
+        <div class="frow">
+          <div class="fgroup">
+            <label>Nome completo *</label>
+            <input type="text" name="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="fgroup">
+            <label>WhatsApp *</label>
+            <input type="tel" name="whatsapp" id="wpp-input" placeholder="(47) 9 9999-9999" oninput="maskPhone(this)" required>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fgroup">
+            <label>E-mail *</label>
+            <input type="email" name="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="fgroup">
+            <label>Plano escolhido *</label>
+            <select name="plano_select" id="plano-select" required>
+              <option value="">Selecione</option>
+              <option value="Plano VIP Básico — R$ 29/mês">Básico — R$ 29/mês</option>
+              <option value="Plano VIP Pro — R$ 59/mês">Pro — R$ 59/mês</option>
+              <option value="Plano VIP Anual — R$ 497/ano">Anual — R$ 497/ano</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          Confirmar cadastro
+        </button>
+        <p class="form-note">Após o envio, efetue o pagamento via PIX ou Cripto para liberar o acesso.</p>
+      </form>
+    </div>
+
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">🎉</div>
+      <h3>Cadastro confirmado!</h3>
+      <p>Recebemos seus dados. Após a confirmação do pagamento, seu acesso VIP será liberado.</p>
+      <div class="success-btns">
+        <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="btn-wpp">💬 Entrar no Grupo VIP</a>
+        <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="btn-ig">📸 Canal Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACESSO DIRETO -->
+  <span class="section-label">Acesso direto às comunidades</span>
+  <div class="vip-grid">
+    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="vip-card wpp">
+      <div class="vip-icon">💬</div>
+      <div class="vip-title">Grupo VIP WhatsApp</div>
+      <div class="vip-desc">Ofertas e novidades exclusivas para clientes</div>
+    </a>
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card ig">
+      <div class="vip-icon">📸</div>
+      <div class="vip-title">Canal VIP Instagram</div>
+      <div class="vip-desc">Conteúdo exclusivo e bastidores</div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  CaixaLike © 2026 &nbsp;·&nbsp;
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+</footer>
+
+<script>
+function maskPhone(el) {
+  let v = el.value.replace(/\D/g,"").substring(0,11);
+  if (v.length >= 7) v = "("+v.substring(0,2)+") "+v.substring(2,7)+"-"+v.substring(7);
+  else if (v.length >= 2) v = "("+v.substring(0,2)+") "+v.substring(2);
+  el.value = v;
+}
+function selPlano(card, plano, preco) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const pill = document.getElementById('form-pill');
+  pill.textContent = '✓ Selecionado: ' + plano + ' — ' + preco;
+  pill.classList.add('visible');
+  document.getElementById('input-plano').value = plano + ' — ' + preco;
+  const sel = document.getElementById('plano-select');
+  for (let o of sel.options) { if (o.value.includes(plano.replace('Plano VIP ',''))) { sel.value = o.value; break; } }
+  document.getElementById('form-body').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const data = new FormData(form);
+  fetch(form.action, { method:'POST', body:data, headers:{ 'Accept':'application/json' } })
+    .finally(() => {
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+    });
+}
+</script>
+
+</body>
+</html>

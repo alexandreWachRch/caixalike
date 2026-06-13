@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CaixaLike — Entre em contato para parcerias e contratações.">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Contato — CaixaLike</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../" class="logo">
+    <div class="logo-name">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
+  <nav class="header-nav">
+    <a href="../"          class="nav-link">Início</a>
+    <a href="../servicos/" class="nav-link">Serviços</a>
+    <a href="../planos/"   class="nav-link">Planos VIP</a>
+    <a href="../contato/"  class="nav-link active">Contato</a>
+  </nav>
+</header>
+
+<section class="hero" style="padding-bottom:24px">
+  <div class="hero-badge">Fale Conosco</div>
+  <h1>Vamos <span>conversar?</span></h1>
+  <p>Tire dúvidas, solicite orçamentos ou entre para a rede de parceiros CaixaLike.</p>
+</section>
+
+<main class="container">
+
+  <a href="../" class="back-link">← Voltar ao início</a>
+
+  <div class="form-card">
+    <h2>Enviar mensagem</h2>
+    <p class="sub">Respondemos em até 24h pelo WhatsApp ou e-mail.</p>
+
+    <div id="form-body">
+      <form
+        action="https://formsubmit.co/aquileslabor@gmail.com"
+        method="POST"
+        onsubmit="handleSubmit(event)"
+      >
+        <input type="hidden" name="_subject"  value="📩 Contato — CaixaLike">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha"  value="false">
+
+        <div class="frow">
+          <div class="fgroup">
+            <label>Nome completo *</label>
+            <input type="text" name="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="fgroup">
+            <label>WhatsApp *</label>
+            <input type="tel" name="whatsapp" id="wpp-input" placeholder="(47) 9 9999-9999" oninput="maskPhone(this)" required>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label>E-mail</label>
+          <input type="email" name="email" placeholder="seu@email.com">
+        </div>
+        <div class="fgroup">
+          <label>Assunto *</label>
+          <select name="assunto" required>
+            <option value="">Selecione</option>
+            <option>Orçamento para criação de site</option>
+            <option>Contratar serviço avulso</option>
+            <option>Assinar plano mensal</option>
+            <option>Parceria CaixaLike</option>
+            <option>Suporte técnico</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Mensagem *</label>
+          <textarea name="mensagem" placeholder="Descreva o que você precisa..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          Enviar mensagem
+        </button>
+        <p class="form-note">🔒 Seus dados não são compartilhados. Resposta em até 24h.</p>
+      </form>
+    </div>
+
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">✅</div>
+      <h3>Mensagem enviada!</h3>
+      <p>Recebemos seu contato e responderemos em até 24h pelo WhatsApp.</p>
+      <div class="success-btns">
+        <a href="https://wa.me/5547984459259" target="_blank" rel="noopener" class="btn-wpp">💬 Falar pelo WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANAIS DIRETOS -->
+  <span class="section-label">Canais diretos</span>
+  <div class="vip-grid">
+    <a href="https://wa.me/5547984459259" target="_blank" rel="noopener" class="vip-card wpp">
+      <div class="vip-icon">💬</div>
+      <div class="vip-title">WhatsApp</div>
+      <div class="vip-desc">(47) 98445-9259</div>
+    </a>
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card ig">
+      <div class="vip-icon">📸</div>
+      <div class="vip-title">Instagram</div>
+      <div class="vip-desc">@caixalike</div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  CaixaLike © 2026 &nbsp;·&nbsp;
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+</footer>
+
+<script>
+function maskPhone(el) {
+  let v = el.value.replace(/\D/g,"").substring(0,11);
+  if (v.length >= 7) v = "("+v.substring(0,2)+") "+v.substring(2,7)+"-"+v.substring(7);
+  else if (v.length >= 2) v = "("+v.substring(0,2)+") "+v.substring(2);
+  el.value = v;
+}
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const data = new FormData(form);
+  fetch(form.action, { method:'POST', body:data, headers:{ 'Accept':'application/json' } })
+    .finally(() => {
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+    });
+}
+</script>
+
+</body>
+</html>
