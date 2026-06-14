@@ -127,6 +127,7 @@
           <input type="hidden" name="_subject"  value="🪙 Identificação Cripto — CaixaLike">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha"  value="false">
+          <input type="hidden" name="plano_servico" id="kyc-plano" value="">
 
           <div class="frow" style="margin-top:14px">
             <div class="fgroup">
@@ -270,7 +271,13 @@
   const preco  = params.get('preco') || sessionStorage.getItem('plano_preco');
   if (plano && preco) {
     const pill = document.getElementById('selected-pill');
-    if (pill) { pill.textContent = '✓ Plano: ' + plano + ' — ' + preco; pill.classList.add('visible'); }
+    if (pill) {
+      pill.innerHTML = `<span style="opacity:.6;font-weight:400;font-size:12px">Plano selecionado</span><br>${plano} — ${preco}`;
+      pill.classList.add('visible');
+    }
+    // Envia o plano junto com o KYC
+    const kycPlano = document.getElementById('kyc-plano');
+    if (kycPlano) kycPlano.value = plano + ' — ' + preco;
   }
 })();
 </script>

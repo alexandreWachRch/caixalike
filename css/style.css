@@ -206,10 +206,10 @@ body {
 .pay-block h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
 .pay-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
 .selected-pill {
-  display: none; background: rgba(230,57,70,.1);
-  border: 1px solid rgba(230,57,70,.25); border-radius: 8px;
-  padding: 10px 14px; font-size: 13px; color: var(--red);
-  font-weight: 700; margin-bottom: 18px;
+  display: none; background: rgba(26,106,255,.1);
+  border: 1px solid rgba(26,106,255,.3); border-radius: 8px;
+  padding: 10px 16px; font-size: 15px; color: #5a9fff;
+  font-weight: 700; margin-bottom: 18px; line-height: 1.4;
 }
 .selected-pill.visible { display: block; }
 
@@ -307,18 +307,20 @@ body {
 .addr-row { display: flex; gap: 6px; }
 .addr-input {
   flex: 1; background: var(--s1); border: 1px solid var(--border);
-  border-radius: 6px; color: rgba(255,255,255,.6);
-  font-size: 9px; padding: 8px 10px; font-family: var(--mono); min-width: 0;
-  transition: border-color .15s;
+  border-radius: 6px; color: rgba(255,255,255,0.9);
+  font-size: 14px; font-weight: 700; padding: 12px 14px;
+  font-family: var(--mono); min-width: 0;
+  transition: border-color .15s; letter-spacing: 0.03em;
+  word-break: break-all;
 }
 .addr-input:focus { border-color: var(--red); }
 .btn-addr {
-  padding: 8px 10px; background: var(--s1); border: 1px solid var(--border);
-  border-radius: 6px; color: var(--muted); font-size: 11px; font-weight: 700;
+  padding: 12px 16px; background: #1a6aff; border: none;
+  border-radius: 6px; color: #fff; font-size: 13px; font-weight: 700;
   cursor: pointer; white-space: nowrap; transition: all .15s; flex-shrink: 0;
 }
-.btn-addr:hover  { border-color: var(--red); color: var(--red); }
-.btn-addr.copied { background: rgba(0,180,100,.1); border-color: #00c875; color: #00c875; }
+.btn-addr:hover  { background: #0052e0; }
+.btn-addr.copied { background: rgba(0,180,100,0.9); color: #fff; }
 .risk-note {
   font-size: 11px; color: #ff6060;
   background: rgba(255,60,60,.07); border: 1px solid rgba(255,60,60,.15);
@@ -424,4 +426,27 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ── MODAL DE PAGAMENTO ── */
+.crypto-grid-3 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.crypto-card-full { grid-column: 1 / -1; }
+.stellar-inner { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; }
+
+.tag-box {
+  background: rgba(230,57,70,.08); border: 1px solid rgba(230,57,70,.25);
+  border-radius: 8px; padding: 12px 14px; margin-top: 12px;
+}
+.tag-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--red); margin-bottom: 6px; }
+.tag-value { font-size: 26px; font-weight: 900; letter-spacing: .12em; font-family: var(--mono); color: #fff; margin-bottom: 8px; }
+.tag-warn {
+  font-size: 12px; font-weight: 600; color: #ff6060;
+  background: rgba(255,60,60,.07); border: 1px solid rgba(255,60,60,.2);
+  border-radius: 7px; padding: 10px 14px; margin-top: 10px; line-height: 1.6;
+}
+
+@media (max-width:640px) {
+  .crypto-grid-3 { grid-template-columns: 1fr; }
+  .crypto-card-full { grid-column: 1; }
+  .stellar-inner { grid-template-columns: 1fr; }
 }
