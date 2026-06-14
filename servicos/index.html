@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CaixaLike — Serviços digitais e planos mensais.">
+  <meta name="description" content="CaixaLike — Serviços digitais: manutenção, SEO, segurança, performance e planos mensais a partir de R$ 19/mês. Joinville e todo o Brasil.">
+  <meta name="keywords" content="manutenção de sites, SEO, segurança, backup, hospedagem, Joinville">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Serviços Digitais — CaixaLike">
+  <meta property="og:description" content="30+ serviços avulsos e planos mensais a partir de R$ 19/mês.">
+  <meta property="og:url" content="https://caixalike.com.br/servicos/">
+  <meta property="og:image" content="https://caixalike.com.br/img/og-image.jpg">
+  <link rel="canonical" href="https://caixalike.com.br/servicos/">
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
   <meta name="theme-color" content="#0A0A0A">
   <title>Serviços — CaixaLike</title>
   <link rel="stylesheet" href="../css/style.css">
@@ -251,6 +259,12 @@ function abrirPagamento(nome,preco,row){
   document.getElementById('kyc-error').classList.remove('visible');
   document.getElementById('modal-overlay').style.display='block';
   document.body.style.overflow='hidden';
+  // Reinicia listener PIX após abrir modal
+  setTimeout(()=>{
+    if(window.CaixaLike)window.CaixaLike.iniciarPIX();
+    const pi=document.getElementById('valorPix');
+    if(pi)pi.focus();
+  },100);
 }
 function fecharModal(e){if(e.target===document.getElementById('modal-overlay'))fecharModalBtn();}
 function fecharModalBtn(){document.getElementById('modal-overlay').style.display='none';document.body.style.overflow='';}
@@ -258,3 +272,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharModalBtn();});
 </script>
 </body>
 </html>
+<script>
+// Override da função abrirPagamento para reiniciar PIX corretamente
+const _origAbrirSvc = abrirPagamento;
+</script>

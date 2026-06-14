@@ -3,9 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CaixaLike — Criação de sites profissionais. Pague via PIX ou Cripto.">
+  <meta name="description" content="CaixaLike — Criação de sites profissionais em Joinville. Planos a partir de R$ 299. Pague via PIX ou Cripto. Manutenção, SEO, segurança e muito mais.">
+  <meta name="keywords" content="criação de sites, sites profissionais, Joinville, manutenção de sites, SEO, e-commerce, loja virtual, CaixaLike">
+  <meta name="author" content="CaixaLike">
+  <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0A0A0A">
-  <title>CaixaLike — Portal de Pagamentos</title>
+
+  <!-- Open Graph (Facebook, WhatsApp, Instagram, LinkedIn) -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://caixalike.com.br/">
+  <meta property="og:title"       content="CaixaLike — Seu site profissional pronto para vender">
+  <meta property="og:description" content="Criação de sites profissionais a partir de R$ 299. Manutenção, SEO, segurança e planos mensais. Pague via PIX ou Cripto.">
+  <meta property="og:image"       content="https://caixalike.com.br/img/og-image.jpg">
+  <meta property="og:locale"      content="pt_BR">
+  <meta property="og:site_name"   content="CaixaLike">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="CaixaLike — Seu site profissional pronto para vender">
+  <meta name="twitter:description" content="Criação de sites profissionais a partir de R$ 299. Pague via PIX ou Cripto.">
+  <meta name="twitter:image"       content="https://caixalike.com.br/img/og-image.jpg">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://caixalike.com.br/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="apple-touch-icon"          href="img/favicon.svg">
+
+  <title>CaixaLike — Criação de Sites Profissionais | Joinville</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
@@ -239,19 +265,41 @@
 function abrirPagamento(card, nome, preco) {
   document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
-  document.getElementById('modal-plano-texto').textContent = nome + ' — ' + preco;
-  document.getElementById('kyc-plano-hidden').value = nome + ' — ' + preco;
-  // Reset pagamento
-  document.getElementById('valorPix').value = '';
-  document.getElementById('pixResult').classList.remove('visible');
+
+  // Preenche label do plano de forma segura
+  const textoEl = document.getElementById('modal-plano-texto');
+  if (textoEl) textoEl.textContent = nome + ' — ' + preco;
+
+  // Preenche hidden do KYC
+  const kycHidden = document.getElementById('kyc-plano-hidden');
+  if (kycHidden) kycHidden.value = nome + ' — ' + preco;
+
+  // Reset PIX
+  const pixInput = document.getElementById('valorPix');
+  const pixResult = document.getElementById('pixResult');
+  const qrPix = document.getElementById('qrcode-pix');
+  if (pixInput)  pixInput.value = '';
+  if (pixResult) pixResult.classList.remove('visible');
+  if (qrPix)    qrPix.innerHTML = '';
+
+  // Reset KYC
   document.getElementById('kyc-gate').style.display = 'block';
   document.getElementById('kyc-locked').style.display = 'flex';
   document.getElementById('kyc-unlocked').style.display = 'none';
   const btn = document.getElementById('kyc-btn');
   if (btn) { btn.textContent = '🔓 Enviar dados e ver endereços'; btn.disabled = false; }
-  document.getElementById('kyc-error').classList.remove('visible');
+  const err = document.getElementById('kyc-error');
+  if (err) err.classList.remove('visible');
+
+  // Abre modal
   document.getElementById('modal-overlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
+
+  // Reinicia listener do PIX (para o campo recém-visível)
+  setTimeout(() => {
+    if (window.CaixaLike) window.CaixaLike.iniciarPIX();
+    if (pixInput) pixInput.focus();
+  }, 100);
 }
 function fecharModal(e) { if (e.target === document.getElementById('modal-overlay')) fecharModalBtn(); }
 function fecharModalBtn() {

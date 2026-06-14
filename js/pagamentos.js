@@ -1,7 +1,7 @@
 /**
- * CaixaLike — Motor de Pagamentos v3.1
- * PIX EMV + QR Code + KYC Cripto (Polygon · Solana · Stellar)
- * Banco Central do Brasil — Padrão EMV v1.0
+ * CaixaLike — Motor de Pagamentos v4.0
+ * Funciona em: página direta (/pagamento/) e modal (index, servicos, planos)
+ * PIX EMV Banco Central do Brasil + KYC Cripto (Polygon · Solana · Stellar)
  */
 
 // ── CONFIGURAÇÃO CENTRAL ──────────────────────────────────────
@@ -19,10 +19,6 @@ const CONFIG = {
       address: "GA22MHPWUODDYFSQMQ3I6BJAHEJCDLEPOIYG5RP47LLIO3YV3KPSIVXV",
       tag:     "88892579"
     }
-  },
-  contato: {
-    email:    "aquileslabor@gmail.com",
-    whatsapp: "5547984459259"
   }
 };
 
@@ -53,40 +49,63 @@ function gerarPayload(valor) {
   p += crc16(p);
   return p;
 }
+
+// ── GERAR QR CODE ────────────────────────────────────────────
 function gerarQR(elementId, texto) {
   const el = document.getElementById(elementId);
-  if (!el || !window.QRCode) return;
+  if (!el) return;
+  // Aguarda a biblioteca carregar se ainda não estiver disponível
+  if (!window.QRCode) {
+    setTimeout(() => gerarQR(elementId, texto), 200);
+    return;
+  }
   el.innerHTML = "";
-  new QRCode(el, { text: texto, width: 150, height: 150, colorDark:"#000", colorLight:"#fff", correctLevel: QRCode.CorrectLevel.M });
+  new QRCode(el, {
+    text: texto,
+    width: 150,
+    height: 150,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
 }
 
-// ── PIX INPUT ────────────────────────────────────────────────
-const _pixInput = document.getElementById("valorPix");
-if (_pixInput) {
-  _pixInput.addEventListener("input", function() {
-    let v = this.value.replace(/[^\d,]/g,"");
+// ── PIX DINÂMICO ─────────────────────────────────────────────
+// Inicializa o listener no campo valorPix (funciona em página e em modal)
+function iniciarPIX() {
+  const input = document.getElementById("valorPix");
+  if (!input || input._pixIniciado) return;
+  input._pixIniciado = true;
+
+  input.addEventListener("input", function() {
+    let v = this.value.replace(/[^\d,]/g, "");
     const pts = v.split(",");
-    if (pts.length > 2) v = pts[0]+","+pts.slice(1).join("").substring(0,2);
-    else if (pts.length === 2) v = pts[0]+","+pts[1].substring(0,2);
+    if (pts.length > 2)      v = pts[0] + "," + pts.slice(1).join("").substring(0, 2);
+    else if (pts.length === 2) v = pts[0] + "," + pts[1].substring(0, 2);
     this.value = v;
-    const num = parseFloat(v.replace(",","."));
+
+    const num = parseFloat(v.replace(",", "."));
     if (!isNaN(num) && num > 0) {
-      const fmt     = num.toFixed(2);
-      const payload = gerarPayload(fmt);
-      const codeEl  = document.getElementById("pixCodigo");
-      const tagEl   = document.getElementById("pixValueTag");
-      const resEl   = document.getElementById("pixResult");
-      const okEl    = document.getElementById("pixConfirm");
-      const btnEl   = document.getElementById("btnCopyPix");
+      const payload = gerarPayload(num.toFixed(2));
+
+      const codeEl = document.getElementById("pixCodigo");
+      const tagEl  = document.getElementById("pixValueTag");
+      const resEl  = document.getElementById("pixResult");
+      const okEl   = document.getElementById("pixConfirm");
+      const btnEl  = document.getElementById("btnCopyPix");
+
       if (codeEl) codeEl.value = payload;
-      if (tagEl)  tagEl.textContent = "R$ " + num.toLocaleString("pt-BR",{minimumFractionDigits:2});
+      if (tagEl)  tagEl.textContent = "R$ " + num.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+      if (resEl)  resEl.classList.add("visible");
+      if (okEl)   okEl.classList.remove("visible");
+      if (btnEl)  { btnEl.textContent = "Copiar"; btnEl.classList.remove("copied"); }
+
       gerarQR("qrcode-pix", payload);
-      if (resEl) resEl.classList.add("visible");
-      if (okEl)  okEl.classList.remove("visible");
-      if (btnEl) { btnEl.textContent = "Copiar"; btnEl.classList.remove("copied"); }
     } else {
       const resEl = document.getElementById("pixResult");
       if (resEl) resEl.classList.remove("visible");
+      const qrEl = document.getElementById("qrcode-pix");
+      if (qrEl) qrEl.innerHTML = "";
     }
   });
 }
@@ -98,32 +117,76 @@ function copiarPix() {
   const ok   = document.getElementById("pixConfirm");
   if (!code || !code.value) return;
   navigator.clipboard.writeText(code.value).then(() => {
-    if (btn) { btn.textContent="✓ Copiado"; btn.classList.add("copied"); }
-    if (ok)  { ok.textContent="✓ Código copiado! Cole no app do banco."; ok.classList.add("visible"); }
+    if (btn) { btn.textContent = "✓ Copiado"; btn.classList.add("copied"); }
+    if (ok)  { ok.textContent = "✓ Código copiado! Cole no app do banco."; ok.classList.add("visible"); }
     setTimeout(() => {
-      if (btn) { btn.textContent="Copiar"; btn.classList.remove("copied"); }
+      if (btn) { btn.textContent = "Copiar"; btn.classList.remove("copied"); }
       if (ok)  ok.classList.remove("visible");
     }, 3500);
-  }).catch(() => { if (code) { code.select(); document.execCommand("copy"); } });
-}
-
-// ── COPIAR ENDEREÇO / TAG ────────────────────────────────────
-function copiarEndereco(inputId, btnId) {
-  const val = document.getElementById(inputId)?.value;
-  const btn = document.getElementById(btnId);
-  if (!val || !btn) return;
-  navigator.clipboard.writeText(val).then(() => {
-    btn.textContent = "✓ Copiado"; btn.classList.add("copied");
-    setTimeout(() => { btn.textContent = "Copiar"; btn.classList.remove("copied"); }, 3000);
+  }).catch(() => {
+    if (code) { code.select(); document.execCommand("copy"); }
   });
 }
 
-// ── KYC — IDENTIFICAÇÃO ANTES DO CRIPTO ─────────────────────
+// ── COPIAR ENDEREÇO CRIPTO ───────────────────────────────────
+function copiarEndereco(inputId, btnId) {
+  const input = document.getElementById(inputId);
+  const btn   = document.getElementById(btnId);
+  if (!input || !btn) return;
+  navigator.clipboard.writeText(input.value).then(() => {
+    btn.textContent = "✓ Copiado";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = btnId.includes("tag") ? "Copiar Tag" : "Copiar";
+      btn.classList.remove("copied");
+    }, 3000);
+  });
+}
+
+// ── KYC — PREENCHE ENDEREÇOS APÓS IDENTIFICAÇÃO ──────────────
+function preencherEnderecos() {
+  const campos = {
+    "endereco-polygon": CONFIG.crypto.polygon,
+    "endereco-solana":  CONFIG.crypto.solana,
+    "endereco-stellar": CONFIG.crypto.stellar.address,
+    "stellar-tag":      CONFIG.crypto.stellar.tag
+  };
+  Object.entries(campos).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
+  // Tag em destaque visual
+  const tagDisplay = document.getElementById("stellar-tag-display");
+  if (tagDisplay) tagDisplay.textContent = CONFIG.crypto.stellar.tag;
+}
+
+function liberarCripto(email) {
+  const gate    = document.getElementById("kyc-gate");
+  const locked  = document.getElementById("kyc-locked");
+  const success = document.getElementById("kyc-unlocked");
+  const msgEl   = document.getElementById("kyc-email-confirm");
+
+  if (gate)    gate.style.display    = "none";
+  if (locked)  locked.style.display  = "none";
+  if (success) success.style.display = "block";
+  if (msgEl)   {
+    const span = document.createElement("span");
+    span.textContent = email ? "Confirmação enviada para: " + email : "Identificação confirmada.";
+    msgEl.innerHTML = "";
+    msgEl.appendChild(span);
+  }
+
+  preencherEnderecos();
+
+  if (success) success.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function handleKycSubmit(event) {
   event.preventDefault();
   const form  = document.getElementById("kyc-form");
   const btn   = document.getElementById("kyc-btn");
   const err   = document.getElementById("kyc-error");
+
   const nome  = form.querySelector('[name="nome"]')?.value.trim();
   const cpf   = form.querySelector('[name="cpf"]')?.value.trim();
   const email = form.querySelector('[name="email"]')?.value.trim();
@@ -136,50 +199,38 @@ function handleKycSubmit(event) {
   if (btn) { btn.textContent = "Enviando…"; btn.disabled = true; }
 
   const data = new FormData(form);
-  fetch(form.action, { method:"POST", body: data, headers:{ "Accept":"application/json" } })
-    .finally(() => liberarCripto(email));
-}
-
-function liberarCripto(email) {
-  const gate    = document.getElementById("kyc-gate");
-  const locked  = document.getElementById("kyc-locked");
-  const success = document.getElementById("kyc-unlocked");
-  const msgEl   = document.getElementById("kyc-email-confirm");
-
-  if (gate)    gate.style.display    = "none";
-  if (locked)  locked.style.display  = "none";
-  if (success) success.style.display = "block";
-  if (msgEl)   msgEl.textContent = email ? `Confirmação enviada para: ${email}` : "Identificação confirmada.";
-
-  // Preenche endereços
-  const elPoly    = document.getElementById("endereco-polygon");
-  const elSol     = document.getElementById("endereco-solana");
-  const elStellar = document.getElementById("endereco-stellar");
-  const elTag     = document.getElementById("stellar-tag");
-  if (elPoly)    elPoly.value    = CONFIG.crypto.polygon;
-  if (elSol)     elSol.value     = CONFIG.crypto.solana;
-  if (elStellar) elStellar.value = CONFIG.crypto.stellar.address;
-  if (elTag)     elTag.value     = CONFIG.crypto.stellar.tag;
-
-  if (success) success.scrollIntoView({ behavior:"smooth", block:"start" });
+  fetch(form.action, {
+    method: "POST",
+    body: data,
+    headers: { "Accept": "application/json" }
+  }).finally(() => liberarCripto(email));
 }
 
 // ── MÁSCARAS ────────────────────────────────────────────────
 function maskCPF(el) {
-  let v = el.value.replace(/\D/g,"").substring(0,11);
-  if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,"$1.$2.$3-$4");
-  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/,"$1.$2.$3");
-  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/,"$1.$2");
+  let v = el.value.replace(/\D/g, "").substring(0, 11);
+  if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, "$1.$2");
   el.value = v;
 }
 function maskPhone(el) {
-  let v = el.value.replace(/\D/g,"").substring(0,11);
-  if (v.length >= 7)     v = "("+v.substring(0,2)+") "+v.substring(2,7)+"-"+v.substring(7);
-  else if (v.length >= 2) v = "("+v.substring(0,2)+") "+v.substring(2);
+  let v = el.value.replace(/\D/g, "").substring(0, 11);
+  if (v.length >= 7)      v = "(" + v.substring(0,2) + ") " + v.substring(2,7) + "-" + v.substring(7);
+  else if (v.length >= 2) v = "(" + v.substring(0,2) + ") " + v.substring(2);
   el.value = v;
 }
 
 // ── INIT ────────────────────────────────────────────────────
-window.addEventListener("load", () => {
-  if (_pixInput) _pixInput.focus();
+// Inicia o PIX quando o DOM estiver pronto
+document.addEventListener("DOMContentLoaded", () => {
+  iniciarPIX();
 });
+
+// Exporta para uso externo (modal)
+window.CaixaLike = {
+  iniciarPIX,
+  preencherEnderecos,
+  liberarCripto,
+  CONFIG
+};

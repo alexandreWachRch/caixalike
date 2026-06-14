@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CaixaLike — Planos VIP WhatsApp e Instagram.">
+  <meta name="description" content="CaixaLike — Planos VIP com acesso ao grupo WhatsApp e canal Instagram exclusivos. A partir de R$ 29/mês.">
+  <meta name="keywords" content="planos VIP, WhatsApp grupo, Instagram canal, ofertas exclusivas, CaixaLike">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Planos VIP — CaixaLike">
+  <meta property="og:description" content="Acesso ao grupo WhatsApp VIP e canal Instagram exclusivo. A partir de R$ 29/mês.">
+  <meta property="og:url" content="https://caixalike.com.br/planos/">
+  <meta property="og:image" content="https://caixalike.com.br/img/og-image.jpg">
+  <link rel="canonical" href="https://caixalike.com.br/planos/">
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
   <meta name="theme-color" content="#0A0A0A">
   <title>Planos VIP — CaixaLike</title>
   <link rel="stylesheet" href="../css/style.css">
@@ -185,6 +193,12 @@ function abrirPagamento(card,nome,preco){
   document.getElementById('kyc-error').classList.remove('visible');
   document.getElementById('modal-overlay').style.display='block';
   document.body.style.overflow='hidden';
+  // Reinicia listener PIX após abrir modal
+  setTimeout(()=>{
+    if(window.CaixaLike)window.CaixaLike.iniciarPIX();
+    const pi=document.getElementById('valorPix');
+    if(pi)pi.focus();
+  },100);
 }
 function fecharModal(e){if(e.target===document.getElementById('modal-overlay'))fecharModalBtn();}
 function fecharModalBtn(){document.getElementById('modal-overlay').style.display='none';document.body.style.overflow='';}

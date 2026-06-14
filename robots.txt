@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://caixalike.com.br/sitemap.xml
