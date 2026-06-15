@@ -266,19 +266,16 @@ function abrirPagamento(card, nome, preco) {
   document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
 
-  // Preenche label do plano de forma segura
   const textoEl = document.getElementById('modal-plano-texto');
   if (textoEl) textoEl.textContent = nome + ' — ' + preco;
 
-  // Preenche hidden do KYC
   const kycHidden = document.getElementById('kyc-plano-hidden');
   if (kycHidden) kycHidden.value = nome + ' — ' + preco;
 
   // Reset PIX
-  const pixInput = document.getElementById('valorPix');
+  const pixInput  = document.getElementById('valorPix');
   const pixResult = document.getElementById('pixResult');
-  const qrPix = document.getElementById('qrcode-pix');
-  if (pixInput)  pixInput.value = '';
+  const qrPix     = document.getElementById('qrcode-pix');
   if (pixResult) pixResult.classList.remove('visible');
   if (qrPix)    qrPix.innerHTML = '';
 
@@ -295,10 +292,14 @@ function abrirPagamento(card, nome, preco) {
   document.getElementById('modal-overlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
 
-  // Reinicia listener do PIX (para o campo recém-visível)
+  // Preenche valor automaticamente
   setTimeout(() => {
-    if (window.CaixaLike) window.CaixaLike.iniciarPIX();
-    if (pixInput) pixInput.focus();
+    if (window.CaixaLike) {
+      window.CaixaLike.iniciarPIX();
+      const valor = window.CaixaLike.PRECOS[nome];
+      if (valor) window.CaixaLike.atualizarPIX(valor);
+      else if (pixInput) { pixInput.value = ''; pixInput.focus(); }
+    }
   }, 100);
 }
 function fecharModal(e) { if (e.target === document.getElementById('modal-overlay')) fecharModalBtn(); }

@@ -247,23 +247,29 @@ let activeRow=null;
 function abrirPagamento(nome,preco,row){
   if(activeRow)activeRow.classList.remove('active');
   if(row){row.classList.add('active');activeRow=row;}
-  document.getElementById('modal-plano-texto').textContent=nome+(preco?' — '+preco:'');
-  document.getElementById('kyc-plano-hidden').value=nome+(preco?' — '+preco:'');
-  document.getElementById('valorPix').value='';
-  document.getElementById('pixResult').classList.remove('visible');
+  const textoEl=document.getElementById('modal-plano-texto');
+  if(textoEl)textoEl.textContent=nome+(preco?' — '+preco:'');
+  const kycHidden=document.getElementById('kyc-plano-hidden');
+  if(kycHidden)kycHidden.value=nome+(preco?' — '+preco:'');
+  const pixResult=document.getElementById('pixResult');
+  const qrPix=document.getElementById('qrcode-pix');
+  if(pixResult)pixResult.classList.remove('visible');
+  if(qrPix)qrPix.innerHTML='';
   document.getElementById('kyc-gate').style.display='block';
   document.getElementById('kyc-locked').style.display='flex';
   document.getElementById('kyc-unlocked').style.display='none';
   const btn=document.getElementById('kyc-btn');
   if(btn){btn.textContent='🔓 Enviar dados e ver endereços';btn.disabled=false;}
-  document.getElementById('kyc-error').classList.remove('visible');
+  const err=document.getElementById('kyc-error');
+  if(err)err.classList.remove('visible');
   document.getElementById('modal-overlay').style.display='block';
   document.body.style.overflow='hidden';
-  // Reinicia listener PIX após abrir modal
   setTimeout(()=>{
-    if(window.CaixaLike)window.CaixaLike.iniciarPIX();
-    const pi=document.getElementById('valorPix');
-    if(pi)pi.focus();
+    if(window.CaixaLike){
+      window.CaixaLike.iniciarPIX();
+      const valor=window.CaixaLike.PRECOS[nome];
+      if(valor)window.CaixaLike.atualizarPIX(valor);
+    }
   },100);
 }
 function fecharModal(e){if(e.target===document.getElementById('modal-overlay'))fecharModalBtn();}
