@@ -172,40 +172,67 @@
   </div>
 </div>
 
+<!-- RODAPÉ ATUALIZADO COM LGPD -->
 <footer class="site-footer">
-  CaixaLike © 2026 &nbsp;·&nbsp; <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+  <div style="text-align:center; padding: 24px 20px; color: #888; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.05);">
+    <p style="margin: 0 0 8px 0;">
+      © CaixaLike 2026 — Todos os direitos reservados.<br>
+      Ao continuar, você concorda com nossa 
+      <a href="/politica-de-privacidade" style="color: #5a9fff; text-decoration: none;">Política de Privacidade</a> e 
+      <a href="/termos-de-uso" style="color: #5a9fff; text-decoration: none;">Termos de Uso</a>, conforme a LGPD.
+    </p>
+    <div style="margin-top: 8px;">
+      <a href="https://wa.me/5547984459259" target="_blank" rel="noopener" style="color: #ccc; text-decoration: none;">(47) 98445-9259</a>
+      <span style="margin: 0 8px; color: #555;">·</span>
+      <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" style="color: #ccc; text-decoration: none;">@caixalike</a>
+    </div>
+  </div>
 </footer>
+
+<!-- BANNER DE CONSENTIMENTO LGPD -->
+<div id="lgpd-banner" style="position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid rgba(255,255,255,0.15);padding:16px 20px;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,0.5);">
+  <p style="margin:0;font-size:13px;color:#ccc;flex:1;min-width:280px;line-height:1.5;">
+    🍪 Utilizamos cookies e coletamos dados pessoais conforme nossa 
+    <a href="/politica-de-privacidade" style="color:#5a9fff;text-decoration:underline;">Política de Privacidade</a>. 
+    Ao continuar navegando, você concorda com os 
+    <a href="/termos-de-uso" style="color:#5a9fff;text-decoration:underline;">Termos de Uso</a> e a LGPD.
+  </p>
+  <button onclick="aceitarLGPD()" style="background:#1a6aff;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='#0d56e6'" onmouseout="this.style.background='#1a6aff'">Aceitar e fechar</button>
+</div>
 
 <script src="../js/pagamentos.js"></script>
 <script>
+// --- LÓGICA DO BANNER LGPD ---
+if(localStorage.getItem('lgpd_aceito') === 'true'){
+  document.getElementById('lgpd-banner').style.display = 'none';
+}
+function aceitarLGPD(){
+  localStorage.setItem('lgpd_aceito', 'true');
+  document.getElementById('lgpd-banner').style.display = 'none';
+}
+
+// --- LÓGICA DO MODAL DE PAGAMENTO (CORRIGIDA) ---
 let activeRow = null;
 
 function abrirPagamento(row, nome, preco){
   try {
-    // Remove classe active do card anterior
     if(activeRow) activeRow.classList.remove('active');
-    
-    // Adiciona classe active no card atual
     if(row){
       row.classList.add('active');
       activeRow = row;
     }
     
-    // Atualiza texto do plano no modal
     const textoEl = document.getElementById('modal-plano-texto');
     if(textoEl) textoEl.textContent = nome + (preco ? ' — ' + preco : '');
     
-    // Atualiza campo hidden do plano
     const kycHidden = document.getElementById('kyc-plano-hidden');
     if(kycHidden) kycHidden.value = nome + (preco ? ' — ' + preco : '');
     
-    // Limpa resultado PIX anterior
     const pixResult = document.getElementById('pixResult');
     const qrPix = document.getElementById('qrcode-pix');
     if(pixResult) pixResult.classList.remove('visible');
     if(qrPix) qrPix.innerHTML = '';
     
-    // Reseta estado do KYC
     document.getElementById('kyc-gate').style.display = 'block';
     document.getElementById('kyc-locked').style.display = 'flex';
     document.getElementById('kyc-unlocked').style.display = 'none';
@@ -219,11 +246,9 @@ function abrirPagamento(row, nome, preco){
     const err = document.getElementById('kyc-error');
     if(err) err.classList.remove('visible');
     
-    // ABRE O MODAL
     document.getElementById('modal-overlay').style.display = 'block';
     document.body.style.overflow = 'hidden';
     
-    // Tenta carregar PIX (não bloqueia se falhar)
     setTimeout(() => {
       try {
         if(window.CaixaLike){
@@ -242,7 +267,6 @@ function abrirPagamento(row, nome, preco){
     
   } catch(e){
     console.error('Erro ao abrir modal:', e);
-    // Mesmo com erro, garante que o modal abra
     document.getElementById('modal-overlay').style.display = 'block';
     document.body.style.overflow = 'hidden';
   }
