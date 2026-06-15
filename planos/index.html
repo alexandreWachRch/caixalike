@@ -178,37 +178,90 @@
 
 <script src="../js/pagamentos.js"></script>
 <script>
-function abrirPagamento(nome,preco,row){
-  if(activeRow)activeRow.classList.remove('active');
-  if(row){row.classList.add('active');activeRow=row;}
-  const textoEl=document.getElementById('modal-plano-texto');
-  if(textoEl)textoEl.textContent=nome+(preco?' — '+preco:'');
-  const kycHidden=document.getElementById('kyc-plano-hidden');
-  if(kycHidden)kycHidden.value=nome+(preco?' — '+preco:'');
-  const pixResult=document.getElementById('pixResult');
-  const qrPix=document.getElementById('qrcode-pix');
-  if(pixResult)pixResult.classList.remove('visible');
-  if(qrPix)qrPix.innerHTML='';
-  document.getElementById('kyc-gate').style.display='block';
-  document.getElementById('kyc-locked').style.display='flex';
-  document.getElementById('kyc-unlocked').style.display='none';
-  const btn=document.getElementById('kyc-btn');
-  if(btn){btn.textContent='🔓 Enviar dados e ver endereços';btn.disabled=false;}
-  const err=document.getElementById('kyc-error');
-  if(err)err.classList.remove('visible');
-  document.getElementById('modal-overlay').style.display='block';
-  document.body.style.overflow='hidden';
-  setTimeout(()=>{
-    if(window.CaixaLike){
-      window.CaixaLike.iniciarPIX();
-      const valor=window.CaixaLike.PRECOS[nome];
-      if(valor)window.CaixaLike.atualizarPIX(valor);
+let activeRow = null;
+
+function abrirPagamento(row, nome, preco){
+  try {
+    // Remove classe active do card anterior
+    if(activeRow) activeRow.classList.remove('active');
+    
+    // Adiciona classe active no card atual
+    if(row){
+      row.classList.add('active');
+      activeRow = row;
     }
-  },100);
+    
+    // Atualiza texto do plano no modal
+    const textoEl = document.getElementById('modal-plano-texto');
+    if(textoEl) textoEl.textContent = nome + (preco ? ' — ' + preco : '');
+    
+    // Atualiza campo hidden do plano
+    const kycHidden = document.getElementById('kyc-plano-hidden');
+    if(kycHidden) kycHidden.value = nome + (preco ? ' — ' + preco : '');
+    
+    // Limpa resultado PIX anterior
+    const pixResult = document.getElementById('pixResult');
+    const qrPix = document.getElementById('qrcode-pix');
+    if(pixResult) pixResult.classList.remove('visible');
+    if(qrPix) qrPix.innerHTML = '';
+    
+    // Reseta estado do KYC
+    document.getElementById('kyc-gate').style.display = 'block';
+    document.getElementById('kyc-locked').style.display = 'flex';
+    document.getElementById('kyc-unlocked').style.display = 'none';
+    
+    const btn = document.getElementById('kyc-btn');
+    if(btn){
+      btn.textContent = '🔓 Enviar dados e ver endereços';
+      btn.disabled = false;
+    }
+    
+    const err = document.getElementById('kyc-error');
+    if(err) err.classList.remove('visible');
+    
+    // ABRE O MODAL
+    document.getElementById('modal-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Tenta carregar PIX (não bloqueia se falhar)
+    setTimeout(() => {
+      try {
+        if(window.CaixaLike){
+          if(typeof window.CaixaLike.iniciarPIX === 'function'){
+            window.CaixaLike.iniciarPIX();
+          }
+          const valor = window.CaixaLike.PRECOS[nome];
+          if(valor && typeof window.CaixaLike.atualizarPIX === 'function'){
+            window.CaixaLike.atualizarPIX(valor);
+          }
+        }
+      } catch(e){
+        console.log('PIX não carregado:', e.message);
+      }
+    }, 100);
+    
+  } catch(e){
+    console.error('Erro ao abrir modal:', e);
+    // Mesmo com erro, garante que o modal abra
+    document.getElementById('modal-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
 }
-function fecharModal(e){if(e.target===document.getElementById('modal-overlay'))fecharModalBtn();}
-function fecharModalBtn(){document.getElementById('modal-overlay').style.display='none';document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharModalBtn();});
+
+function fecharModal(e){
+  if(e.target === document.getElementById('modal-overlay')){
+    fecharModalBtn();
+  }
+}
+
+function fecharModalBtn(){
+  document.getElementById('modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') fecharModalBtn();
+});
 </script>
 </body>
 </html>
