@@ -70,10 +70,10 @@
 
   <span class="section-label">Acesso direto</span>
   <div class="vip-grid">
-    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="vip-card wpp">
+    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener noreferrer" class="vip-card wpp">
       <div class="vip-icon">💬</div><div class="vip-title">Grupo VIP WhatsApp</div><div class="vip-desc">Ofertas e novidades exclusivas</div>
     </a>
-    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card ig">
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer" class="vip-card ig">
       <div class="vip-icon">📸</div><div class="vip-title">Canal VIP Instagram</div><div class="vip-desc">Conteúdo exclusivo e bastidores</div>
     </a>
   </div>
@@ -182,9 +182,9 @@
       <a href="/termos-de-uso" style="color: #5a9fff; text-decoration: none;">Termos de Uso</a>, conforme a LGPD.
     </p>
     <div style="margin-top: 8px;">
-      <a href="https://wa.me/5547984459259" target="_blank" rel="noopener" style="color: #ccc; text-decoration: none;">(47) 98445-9259</a>
+      <a href="https://wa.me/5547984459259" target="_blank" rel="noopener noreferrer" style="color: #ccc; text-decoration: none;">(47) 98445-9259</a>
       <span style="margin: 0 8px; color: #555;">·</span>
-      <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" style="color: #ccc; text-decoration: none;">@caixalike</a>
+      <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer" style="color: #ccc; text-decoration: none;">@caixalike</a>
     </div>
   </div>
 </footer>
@@ -221,34 +221,34 @@ function abrirPagamento(row, nome, preco){
       row.classList.add('active');
       activeRow = row;
     }
-    
+
     const textoEl = document.getElementById('modal-plano-texto');
     if(textoEl) textoEl.textContent = nome + (preco ? ' — ' + preco : '');
-    
+
     const kycHidden = document.getElementById('kyc-plano-hidden');
     if(kycHidden) kycHidden.value = nome + (preco ? ' — ' + preco : '');
-    
+
     const pixResult = document.getElementById('pixResult');
     const qrPix = document.getElementById('qrcode-pix');
     if(pixResult) pixResult.classList.remove('visible');
     if(qrPix) qrPix.innerHTML = '';
-    
+
     document.getElementById('kyc-gate').style.display = 'block';
     document.getElementById('kyc-locked').style.display = 'flex';
     document.getElementById('kyc-unlocked').style.display = 'none';
-    
+
     const btn = document.getElementById('kyc-btn');
     if(btn){
       btn.textContent = '🔓 Enviar dados e ver endereços';
       btn.disabled = false;
     }
-    
+
     const err = document.getElementById('kyc-error');
     if(err) err.classList.remove('visible');
-    
+
     document.getElementById('modal-overlay').style.display = 'block';
     document.body.style.overflow = 'hidden';
-    
+
     setTimeout(() => {
       try {
         if(window.CaixaLike){
@@ -264,7 +264,7 @@ function abrirPagamento(row, nome, preco){
         console.log('PIX não carregado:', e.message);
       }
     }, 100);
-    
+
   } catch(e){
     console.error('Erro ao abrir modal:', e);
     document.getElementById('modal-overlay').style.display = 'block';
