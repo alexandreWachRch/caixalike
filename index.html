@@ -9,7 +9,6 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0A0A0A">
 
-  <!-- Open Graph (Facebook, WhatsApp, Instagram, LinkedIn) -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://caixalike.com.br/">
   <meta property="og:title"       content="CaixaLike — Seu site profissional pronto para vender">
@@ -18,16 +17,12 @@
   <meta property="og:locale"      content="pt_BR">
   <meta property="og:site_name"   content="CaixaLike">
 
-  <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="CaixaLike — Seu site profissional pronto para vender">
   <meta name="twitter:description" content="Criação de sites profissionais a partir de R$ 299. Pague via PIX ou Cripto.">
   <meta name="twitter:image"       content="https://caixalike.com.br/img/og-image.jpg">
 
-  <!-- Canonical -->
   <link rel="canonical" href="https://caixalike.com.br/">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="apple-touch-icon"          href="img/favicon.svg">
 
@@ -244,10 +239,10 @@
 
   <span class="section-label">Acesso direto</span>
   <div class="vip-grid">
-    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener" class="vip-card wpp">
+    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener noreferrer" class="vip-card wpp">
       <div class="vip-icon">💬</div><div class="vip-title">Grupo VIP WhatsApp</div><div class="vip-desc">Ofertas e novidades exclusivas</div>
     </a>
-    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener" class="vip-card ig">
+    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer" class="vip-card ig">
       <div class="vip-icon">📸</div><div class="vip-title">Canal VIP Instagram</div><div class="vip-desc">Conteúdo exclusivo e bastidores</div>
     </a>
   </div>
@@ -256,8 +251,8 @@
 
 <footer class="site-footer">
   CaixaLike © 2026 — Portal de Pagamentos &nbsp;·&nbsp;
-  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a> &nbsp;·&nbsp;
-  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener">@caixalike</a>
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener noreferrer">(47) 98445-9259</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer">@caixalike</a>
 </footer>
 
 <script src="js/pagamentos.js"></script>
@@ -272,14 +267,12 @@ function abrirPagamento(card, nome, preco) {
   const kycHidden = document.getElementById('kyc-plano-hidden');
   if (kycHidden) kycHidden.value = nome + ' — ' + preco;
 
-  // Reset PIX
   const pixInput  = document.getElementById('valorPix');
   const pixResult = document.getElementById('pixResult');
   const qrPix     = document.getElementById('qrcode-pix');
   if (pixResult) pixResult.classList.remove('visible');
   if (qrPix)    qrPix.innerHTML = '';
 
-  // Reset KYC
   document.getElementById('kyc-gate').style.display = 'block';
   document.getElementById('kyc-locked').style.display = 'flex';
   document.getElementById('kyc-unlocked').style.display = 'none';
@@ -288,11 +281,9 @@ function abrirPagamento(card, nome, preco) {
   const err = document.getElementById('kyc-error');
   if (err) err.classList.remove('visible');
 
-  // Abre modal
   document.getElementById('modal-overlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
 
-  // Preenche valor automaticamente
   setTimeout(() => {
     if (window.CaixaLike) {
       window.CaixaLike.iniciarPIX();
