@@ -62,7 +62,7 @@
     <a href="../servicos/" class="nav-link">Serviços</a>
     <a href="../planos/"   class="nav-link">Planos VIP</a>
     <a href="../contato/"  class="nav-link">Contato</a>
-    <a href="https://google.com" target="_blank">Google</a>
+    <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link">Google</a>
   </nav>
 </header>
 
@@ -215,13 +215,11 @@
             <p class="crypto-net-tag">XLM — Rede Stellar · Taxa: Sem custo</p>
 
             <div class="stellar-inner">
-              <!-- QR Code -->
               <div class="crypto-qr-box">
                 <img src="../img/qr-stellar.jpg" alt="QR Code Stellar XLM"
                   style="width:150px;height:150px;object-fit:contain">
               </div>
 
-              <!-- Endereço + Tag -->
               <div>
                 <p class="addr-label">Endereço da carteira</p>
                 <div class="addr-row" style="margin-bottom:14px">
@@ -231,7 +229,6 @@
                     onclick="copiarEndereco('endereco-stellar','btn-stellar')">Copiar</button>
                 </div>
 
-                <!-- Destination Tag em destaque -->
                 <div class="tag-box">
                   <div class="tag-label">⚠️ Destination Tag — OBRIGATÓRIO</div>
                   <div class="tag-value" id="stellar-tag-display"></div>
@@ -260,12 +257,11 @@
 
 <footer class="site-footer">
   CaixaLike © 2026 — Portal de Pagamentos &nbsp;·&nbsp;
-  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener">(47) 98445-9259</a>
+  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener noreferrer">(47) 98445-9259</a>
 </footer>
 
 <script src="../js/pagamentos.js"></script>
 <script>
-// Recupera plano da URL ou sessionStorage
 (function() {
   const params = new URLSearchParams(window.location.search);
   const plano  = params.get('plano') || sessionStorage.getItem('plano_selecionado');
@@ -276,7 +272,6 @@
       pill.innerHTML = `<span style="opacity:.6;font-weight:400;font-size:12px">Plano selecionado</span><br>${plano} — ${preco}`;
       pill.classList.add('visible');
     }
-    // Envia o plano junto com o KYC
     const kycPlano = document.getElementById('kyc-plano');
     if (kycPlano) kycPlano.value = plano + ' — ' + preco;
   }
