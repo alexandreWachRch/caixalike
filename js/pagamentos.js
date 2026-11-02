@@ -62,7 +62,6 @@ const PRECOS = {
   "Integração Infitipay": 49
 };
 
-// ── PIX EMV ──────────────────────────────────────────────────
 function tlv(id, val) {
   return String(id).padStart(2, "0") + String(val.length).padStart(2, "0") + val;
 }
@@ -95,7 +94,6 @@ function gerarPayload(valor) {
   return p;
 }
 
-// ── GERAR QR CODE ────────────────────────────────────────────
 function gerarQR(elementId, texto) {
   const el = document.getElementById(elementId);
   if (!el) return;
@@ -108,7 +106,6 @@ function gerarQR(elementId, texto) {
   });
 }
 
-// ── ATUALIZAR PIX COM VALOR ──────────────────────────────────
 function atualizarPIX(valor) {
   const num = parseFloat(String(valor).replace(",", "."));
   if (isNaN(num) || num <= 0) return;
@@ -133,7 +130,6 @@ function atualizarPIX(valor) {
   setTimeout(() => gerarQR("qrcode-pix", payload), 50);
 }
 
-// ── PIX DINÂMICO (input manual) ──────────────────────────────
 function iniciarPIX() {
   const input = document.getElementById("valorPix");
   if (!input || input._pixIniciado) return;
@@ -142,7 +138,7 @@ function iniciarPIX() {
   input.addEventListener("input", function() {
     let v = this.value.replace(/[^\d,]/g, "");
     const pts = v.split(",");
-    if (pts.length > 2)       v = pts[0] + "," + pts.slice(1).join("").substring(0, 2);
+    if (pts.length > 2) v = pts[0] + "," + pts.slice(1).join("").substring(0, 2);
     else if (pts.length === 2) v = pts[0] + "," + pts[1].substring(0, 2);
     this.value = v;
 
@@ -158,7 +154,6 @@ function iniciarPIX() {
   });
 }
 
-// ── COPIAR PIX ───────────────────────────────────────────────
 function copiarPix() {
   const code = document.getElementById("pixCodigo");
   const btn  = document.getElementById("btnCopyPix");
@@ -178,7 +173,6 @@ function copiarPix() {
   });
 }
 
-// ── COPIAR ENDEREÇO CRIPTO ───────────────────────────────────
 function copiarEndereco(inputId, btn) {
   const input = document.getElementById(inputId);
   if (!input || !input.value) return;
@@ -199,19 +193,16 @@ function copiarEndereco(inputId, btn) {
   });
 }
 
-// ── PREENCHER ENDEREÇO RLUSD ─────────────────────────────────
 function preencherEnderecos() {
   const el = document.getElementById("endereco-rlusd");
   if (el) el.value = CONFIG.crypto.rlusd.address;
 }
 
-// ── INICIALIZAÇÃO ────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   iniciarPIX();
   preencherEnderecos();
 });
 
-// Expõe globalmente para uso nos onclick do HTML
 window.copiarPix = copiarPix;
 window.copiarEndereco = copiarEndereco;
 
