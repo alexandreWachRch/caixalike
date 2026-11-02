@@ -2,260 +2,196 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="CaixaLike — Criação de sites profissionais em Joinville. Pague via PIX ou RLUSD.">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CaixaLike — Criação de Sites Profissionais | Joinville</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>
-:root{color-scheme:dark;--bg:#0a0a0a;--card:#111;--line:rgba(255,255,255,.1);--muted:#9a9a9a;--blue:#1a6aff;--blue2:#5a9fff;--green:#22c55e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-a{color:inherit;text-decoration:none}
-.site-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:16px 24px;border-bottom:1px solid var(--line)}
-.logo-name{font-size:22px;font-weight:800}.logo-name span{color:var(--blue2)}
-.logo-sub{font-size:11px;color:var(--muted)}
-.header-nav{display:flex;gap:18px;font-size:14px;color:var(--muted)}
-.nav-link.active,.nav-link:hover{color:#fff}
-.hero{text-align:center;padding:48px 20px 24px}
-.hero-badge{display:inline-block;font-size:12px;padding:4px 12px;border-radius:99px;background:rgba(26,106,255,.12);border:1px solid rgba(26,106,255,.3);color:var(--blue2)}
-.hero h1{font-size:clamp(28px,6vw,46px);margin:14px 0 8px}.hero h1 span{color:var(--blue2)}
-.hero p{color:var(--muted);margin:0}
-.container{max-width:1100px;margin:0 auto;padding:16px 20px 48px}
-.section-label{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px}
-.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.plan-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;cursor:pointer;transition:.2s}
-.plan-card:hover,.plan-card.selected{border-color:var(--blue);transform:translateY(-2px)}
-.plan-card.featured{border-color:rgba(90,159,255,.5)}
-.plan-top-badge{position:absolute;top:-11px;left:16px;background:var(--blue);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
-.plan-icon{font-size:28px}.plan-name{font-size:18px;font-weight:700;margin-top:6px}
-.plan-range{color:var(--blue2);font-weight:700;margin:4px 0 12px}
-.plan-feats{list-style:none;padding:0;margin:0 0 16px;font-size:13px;color:var(--muted)}
-.plan-feats li{padding:3px 0 3px 18px;position:relative}.plan-feats li::before{content:"✓";position:absolute;left:0;color:var(--green)}
-.btn-select-plan{width:100%;padding:11px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer;font-size:14px}
-.banner{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
-.banner-badge{font-size:11px;color:var(--blue2);text-transform:uppercase;letter-spacing:.08em}
-.banner h3{margin:4px 0;font-size:16px}.banner p{margin:0;font-size:13px;color:var(--muted)}.banner-arrow{font-size:22px;color:var(--blue2)}
-.vip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.vip-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.2s}
-.vip-card.wpp:hover{border-color:#25d366}.vip-card.ig:hover{border-color:#e1306c}
-.vip-icon{font-size:26px}.vip-title{font-weight:700;margin-top:4px}.vip-desc{font-size:13px;color:var(--muted)}
-.site-footer{text-align:center;padding:24px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
-.site-footer a{color:var(--blue2)}
-/* Modal */
-#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;overflow-y:auto;padding:20px}
-#modal-box{background:#111;border:1px solid var(--line);border-radius:16px;max-width:720px;margin:0 auto;padding:32px;position:relative}
-.modal-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.1);border:0;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer}
-.plano-label{background:rgba(26,106,255,.1);border:1px solid rgba(26,106,255,.3);border-radius:8px;padding:10px 16px;margin-bottom:20px}
-.plano-label small{display:block;font-size:11px;color:var(--blue2);opacity:.7}
-#modal-plano-texto{font-size:16px;font-weight:700;color:var(--blue2)}
-.pay-module{background:#161616;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px}
-.pay-module h3{margin:0 0 12px;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;background:rgba(34,197,94,.15);color:var(--green)}
-.badge.x{background:rgba(90,159,255,.15);color:var(--blue2)}
-.valor-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.valor-label{color:var(--muted);font-size:14px}
-.valor-input{flex:1;max-width:180px;background:#0a0a0a;border:1px solid var(--line);border-radius:8px;color:#fff;padding:10px 12px;font-size:18px;font-weight:700}
-.pix-result{display:none}.pix-result.visible{display:block}
-.pix-value-tag{font-size:22px;font-weight:800;color:var(--green);margin-bottom:12px}
-.pix-cols{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
-.qr-box{background:#fff;padding:10px;border-radius:10px;min-width:150px;min-height:150px}
-.pix-cols>div:last-child{flex:1;min-width:220px}
-.hint{font-size:13px;color:var(--muted);margin:0 0 10px}
-.copy-row,.addr-row{display:flex;gap:8px}
-.copy-input,.addr-input{flex:1;min-width:0;background:#0a0a0a;border:1px solid var(--line);border-radius:8px;color:#fff;padding:10px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
-.btn-copy,.btn-addr{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:0 16px;font-weight:700;cursor:pointer}
-.btn-copy.ok,.btn-addr.ok{background:var(--green)}
-.crypto-card{background:#0f0f0f;border:1px solid rgba(90,159,255,.35);border-radius:12px;padding:18px}
-.crypto-card h4{margin:0 0 2px;font-size:16px}
-.crypto-net-tag{font-size:12px;color:var(--blue2);margin:0 0 14px}
-.addr-label{font-size:12px;color:var(--muted);margin:0 0 6px}
-.risk-note{margin-top:12px;font-size:12px;color:#f5b94a;background:rgba(245,185,74,.08);border-radius:8px;padding:8px 12px}
-.config-warn{display:none;margin-top:10px;font-size:12px;color:#f5b94a}
-@media(max-width:560px){#modal-box{padding:22px 16px}}
-</style>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="pagamentos.js" defer></script>
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="site-header">
-  <a href="/" class="logo"><div class="logo-name">Caixa<span>Like</span></div><div class="logo-sub">Portal de Pagamentos</div></a>
+  <a href="index (3).html" class="logo">
+    <div class="logo-name">Caixa<span>Like</span></div>
+    <div class="logo-sub">Portal de Pagamentos</div>
+  </a>
   <nav class="header-nav">
-    <a href="#" class="nav-link active">Início</a>
+    <a href="index (3).html" class="nav-link active">Início</a>
     <a href="servicos/" class="nav-link">Serviços</a>
     <a href="planos/" class="nav-link">Planos VIP</a>
     <a href="contato/" class="nav-link">Contato</a>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">Criação de Sites Profissionais</div>
+  <span class="hero-badge">🚀 Sites profissionais</span>
   <h1>Seu site pronto para <span>vender</span></h1>
   <p>Clique no plano desejado e pague na hora via PIX ou RLUSD.</p>
 </section>
 
-<main class="container">
+<div class="container">
+
+  <!-- PLANOS -->
   <span class="section-label">Planos de criação</span>
+  <h2 class="section-title">Escolha seu plano</h2>
+
   <div class="plans-grid">
-    <div class="plan-card" onclick="abrirPagamento(this,'Plano Comercial','R$ 299 a R$ 499',299)">
-      <div class="plan-icon">🏪</div><div class="plan-name">Comercial</div><div class="plan-range">R$ 299 — R$ 499</div>
-      <ul class="plan-feats"><li>Site responsivo até 5 páginas</li><li>Integração PIX + WhatsApp</li><li>Domínio e hospedagem 1º ano</li><li>Suporte por 30 dias</li></ul>
+    <div class="plan-card" onclick="CaixaLike.atualizarPIX(299)">
+      <div class="plan-icon">🏪</div>
+      <div class="plan-name">Comercial</div>
+      <div class="plan-range">R$ 299 — R$ 499</div>
+      <ul class="plan-feats">
+        <li>Site responsivo até 5 páginas</li>
+        <li>Integração PIX + WhatsApp</li>
+        <li>Domínio e hospedagem 1º ano</li>
+        <li>Suporte por 30 dias</li>
+      </ul>
       <button class="btn-select-plan">Contratar e Pagar</button>
     </div>
-    <div class="plan-card featured" onclick="abrirPagamento(this,'Plano Corporativo','R$ 499 a R$ 899',499)">
-      <div class="plan-top-badge">⭐ Mais contratado</div>
-      <div class="plan-icon">🏢</div><div class="plan-name">Corporativo</div><div class="plan-range">R$ 499 — R$ 899</div>
-      <ul class="plan-feats"><li>Site completo até 10 páginas</li><li>Blog, catálogo e formulários</li><li>Integração redes sociais</li><li>SEO básico incluído</li><li>Suporte por 60 dias</li></ul>
+
+    <div class="plan-card featured" onclick="CaixaLike.atualizarPIX(499)">
+      <span class="plan-top-badge">⭐ Mais contratado</span>
+      <div class="plan-icon">🏢</div>
+      <div class="plan-name">Corporativo</div>
+      <div class="plan-range">R$ 499 — R$ 899</div>
+      <ul class="plan-feats">
+        <li>Site completo até 10 páginas</li>
+        <li>Blog, catálogo e formulários</li>
+        <li>Integração redes sociais</li>
+        <li>SEO básico incluído</li>
+        <li>Suporte por 60 dias</li>
+      </ul>
       <button class="btn-select-plan">Contratar e Pagar</button>
     </div>
-    <div class="plan-card" onclick="abrirPagamento(this,'Plano Empresarial','R$ 899 a R$ 1.499',899)">
-      <div class="plan-icon">🏭</div><div class="plan-name">Empresarial</div><div class="plan-range">R$ 899 — R$ 1.499</div>
-      <ul class="plan-feats"><li>Site ilimitado com painel admin</li><li>Sistema de agendamento online</li><li>Google Analytics integrado</li><li>E-mail corporativo incluso</li><li>Suporte por 90 dias</li></ul>
+
+    <div class="plan-card" onclick="CaixaLike.atualizarPIX(899)">
+      <div class="plan-icon">🏭</div>
+      <div class="plan-name">Empresarial</div>
+      <div class="plan-range">R$ 899 — R$ 1.499</div>
+      <ul class="plan-feats">
+        <li>Site ilimitado com painel admin</li>
+        <li>Sistema de agendamento online</li>
+        <li>Google Analytics integrado</li>
+        <li>E-mail corporativo incluso</li>
+        <li>Suporte por 90 dias</li>
+      </ul>
       <button class="btn-select-plan">Contratar e Pagar</button>
     </div>
-    <div class="plan-card" onclick="abrirPagamento(this,'Plano E-commerce','R$ 1.499 a R$ 4.999',1499)">
-      <div class="plan-icon">🛒</div><div class="plan-name">E-commerce</div><div class="plan-range">R$ 1.499 — R$ 4.999</div>
-      <ul class="plan-feats"><li>Loja virtual com catálogo ilimitado</li><li>Checkout PIX, cartão e boleto</li><li>Painel de pedidos e estoque</li><li>Integração Correios + transportadoras</li><li>Suporte premium por 6 meses</li></ul>
+
+    <div class="plan-card" onclick="CaixaLike.atualizarPIX(1499)">
+      <div class="plan-icon">🛒</div>
+      <div class="plan-name">E-commerce</div>
+      <div class="plan-range">R$ 1.499 — R$ 4.999</div>
+      <ul class="plan-feats">
+        <li>Loja virtual com catálogo ilimitado</li>
+        <li>Checkout PIX, cartão e boleto</li>
+        <li>Painel de pedidos e estoque</li>
+        <li>Integração Correios + transportadoras</li>
+        <li>Suporte premium por 6 meses</li>
+      </ul>
       <button class="btn-select-plan">Contratar e Pagar</button>
     </div>
   </div>
 
-  <!-- MODAL DE PAGAMENTO: PIX + RLUSD -->
-  <div id="modal-overlay" onclick="fecharModal(event)">
-    <div id="modal-box">
-      <button class="modal-close" onclick="fecharModalBtn()" aria-label="Fechar">×</button>
+  <!-- BLOCO DE PAGAMENTO -->
+  <div class="pay-block" style="margin-top:40px;">
+    <h2>💳 Como deseja pagar?</h2>
+    <p class="pay-sub">PIX instantâneo ou criptomoeda. Digite o valor ou clique em um plano acima.</p>
 
-      <div class="plano-label"><small>Plano selecionado</small><div id="modal-plano-texto"></div></div>
+    <!-- PIX -->
+    <div class="pix-module">
+      <h3>📱 PIX Instantâneo <span class="badge-pix">Instantâneo</span></h3>
+      <div class="valor-row">
+        <span class="valor-label">Valor R$</span>
+        <input type="text" id="valorPix" class="valor-input" placeholder="0,00" inputmode="decimal">
+      </div>
 
-      <!-- PIX -->
-      <div class="pay-module">
-        <h3>📱 PIX <span class="badge">Instantâneo</span></h3>
-        <div class="valor-row">
-          <span class="valor-label">Valor R$</span>
-          <input class="valor-input" type="text" id="valorPix" placeholder="0,00" inputmode="decimal" maxlength="12" autocomplete="off">
-        </div>
-        <div class="pix-result" id="pixResult">
-          <div class="pix-value-tag" id="pixValueTag"></div>
-          <div class="pix-cols">
-            <div class="qr-box" id="qrcode-pix"></div>
-            <div>
-              <p class="hint">Abra o banco → <strong style="color:#fff">Pagar com PIX</strong> → Cole o código.</p>
-              <div class="copy-row">
-                <input class="copy-input" type="text" id="pixCodigo" readonly placeholder="Código PIX...">
-                <button class="btn-copy" id="btnCopyPix" onclick="copiar('pixCodigo','btnCopyPix')">Copiar</button>
-              </div>
-              <div class="config-warn" id="pixWarn">⚠️ Configure PIX_KEY no código para gerar um PIX real.</div>
+      <div id="pixResult" class="pix-result">
+        <div class="pix-value-tag" id="pixValueTag">R$ 0,00</div>
+        <div class="pix-cols">
+          <div class="qr-box"><div id="qrcode-pix"></div></div>
+          <div>
+            <textarea id="pixCodigo" class="copy-input" rows="4" readonly></textarea>
+            <div class="copy-row">
+              <button id="btnCopyPix" class="btn-copy" onclick="copiarPix()">Copiar</button>
             </div>
+            <div id="pixConfirm" class="copy-confirm">✓ Código copiado! Cole no app do banco.</div>
+            <p style="font-size:11px;color:var(--muted);margin-top:10px;">
+              Abra o app do banco → Pagar com PIX → Copia e cola → Confirmar.
+            </p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- RLUSD (XRPL) -->
-      <div class="pay-module">
-        <h3>🪙 Criptomoeda <span class="badge x">RLUSD · XRPL</span></h3>
-        <p class="hint">Pagamento via RLUSD na rede XRPL.</p>
-        <div class="crypto-card">
-          <h4>🪙 RLUSD (XRPL)</h4>
-          <p class="crypto-net-tag">Ripple USD — XRP Ledger</p>
-          <p class="addr-label">Endereço</p>
-          <div class="addr-row">
-            <input class="addr-input" id="endereco-rlusd" value="rH5yzozYmmHZdAfHJQwAZyUAJt1uek6gYQ" readonly>
-            <button class="btn-addr" id="btn-rlusd" onclick="copiar('endereco-rlusd','btn-rlusd')">Copiar</button>
-          </div>
-          <div class="risk-note">⚠️ Envie apenas RLUSD pela rede XRPL.</div>
+    <!-- CRIPTO (APENAS RLUSD) -->
+    <div class="crypto-module">
+      <h3>🪙 Criptomoeda RLUSD · XRPL <span class="badge-crypto">Crypto</span></h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">
+        Pagamento via RLUSD na rede XRP Ledger.
+      </p>
+
+      <div class="crypto-card crypto-card-full">
+        <h4>RLUSD (XRPL)</h4>
+        <div class="crypto-net-tag">Ripple USD — XRP Ledger</div>
+
+        <div class="addr-label">Endereço da carteira</div>
+        <div class="addr-row">
+          <input type="text" id="endereco-rlusd" class="addr-input" readonly value="rH5yzozYmmHZdAfHJQwAZyUAJt1uek6gYQ">
+          <button class="btn-addr" onclick="copiarEndereco('endereco-rlusd', this)">Copiar</button>
+        </div>
+
+        <div class="risk-note" style="margin-top:12px;">
+          ⚠️ Envie apenas RLUSD pela rede XRPL. Outras redes/ativos não serão creditados.
         </div>
       </div>
     </div>
   </div>
 
-  <a href="servicos/" class="banner" style="margin-top:32px">
-    <div><div class="banner-badge">Serviços &amp; Planos Mensais</div><h3>Manutenção · SEO · Segurança · Performance</h3><p>30+ serviços avulsos + planos mensais de R$ 29 a R$ 149/mês</p></div>
-    <span class="banner-arrow">→</span>
-  </a>
-  <a href="planos/" class="banner" style="margin-top:10px">
-    <div><div class="banner-badge">Comunidade VIP</div><h3>Grupo WhatsApp + Canal Instagram exclusivos</h3><p>Ofertas, dicas e conteúdo premium a partir de R$ 29/mês</p></div>
-    <span class="banner-arrow">→</span>
+  <!-- BANNERS -->
+  <a href="servicos/" class="banner">
+    <div>
+      <span class="banner-badge">Serviços & Planos Mensais</span>
+      <h3>Manutenção · SEO · Segurança · Performance</h3>
+      <p>30+ serviços avulsos + planos mensais de R$ 29 a R$ 149/mês</p>
+    </div>
+    <div class="banner-arrow">→</div>
   </a>
 
+  <a href="planos/" class="banner">
+    <div>
+      <span class="banner-badge">Comunidade VIP</span>
+      <h3>Grupo WhatsApp + Canal Instagram exclusivos</h3>
+      <p>Ofertas, dicas e conteúdo premium a partir de R$ 29/mês</p>
+    </div>
+    <div class="banner-arrow">→</div>
+  </a>
+
+  <!-- VIP -->
   <span class="section-label">Acesso direto</span>
   <div class="vip-grid">
-    <a href="https://chat.whatsapp.com/DTsbC0bhceg2gHy6q6TUKm" target="_blank" rel="noopener noreferrer" class="vip-card wpp"><div class="vip-icon">💬</div><div class="vip-title">Grupo VIP WhatsApp</div><div class="vip-desc">Ofertas e novidades exclusivas</div></a>
-    <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer" class="vip-card ig"><div class="vip-icon">📸</div><div class="vip-title">Canal VIP Instagram</div><div class="vip-desc">Conteúdo exclusivo e bastidores</div></a>
+    <a href="https://wa.me/5547984459259" class="vip-card wpp" target="_blank">
+      <div class="vip-icon">💬</div>
+      <div class="vip-title">Grupo VIP WhatsApp</div>
+      <div class="vip-desc">Ofertas e novidades exclusivas</div>
+    </a>
+    <a href="https://www.instagram.com/caixalike/" class="vip-card ig" target="_blank">
+      <div class="vip-icon">📸</div>
+      <div class="vip-title">Canal VIP Instagram</div>
+      <div class="vip-desc">Conteúdo exclusivo e bastidores</div>
+    </a>
   </div>
-</main>
 
+</div>
+
+<!-- FOOTER -->
 <footer class="site-footer">
-  CaixaLike © 2026 — Portal de Pagamentos &nbsp;·&nbsp;
-  <a href="https://wa.me/5547984459259" target="_blank" rel="noopener noreferrer">(47) 98445-9259</a> &nbsp;·&nbsp;
-  <a href="https://www.instagram.com/caixalike/" target="_blank" rel="noopener noreferrer">@caixalike</a>
+  CaixaLike © 2026 — Portal de Pagamentos ·
+  <a href="https://wa.me/5547984459259">(47) 98445-9259</a> ·
+  <a href="https://www.instagram.com/caixalike/">@caixalike</a>
 </footer>
 
-<script>
-/* ====== CONFIGURE AQUI ====== */
-const PIX_KEY  = '77e8169e-8a5f-4d6b-92b1-c26b1a9aa910';   // CPF/CNPJ, e-mail, telefone (+55...) ou chave aleatória
-const PIX_NOME = 'CAIXALIKE';             // até 25 caracteres, sem acentos
-const PIX_CIDADE = 'JOINVILLE';           // até 15 caracteres, sem acentos
-/* ============================ */
-
-function tlv(id, v){ return id + String(v.length).padStart(2,'0') + v; }
-function crc16(s){
-  let c = 0xFFFF;
-  for (let i=0;i<s.length;i++){ c ^= s.charCodeAt(i) << 8;
-    for (let j=0;j<8;j++) c = (c & 0x8000) ? ((c<<1) ^ 0x1021) & 0xFFFF : (c<<1) & 0xFFFF; }
-  return c.toString(16).toUpperCase().padStart(4,'0');
-}
-function gerarPix(valor){
-  const conta = tlv('00','br.gov.bcb.pix') + tlv('01',PIX_KEY);
-  let p = tlv('00','01') + tlv('26',conta) + tlv('52','0000') + tlv('53','986');
-  if (valor > 0) p += tlv('54', valor.toFixed(2));
-  p += tlv('58','BR') + tlv('59',PIX_NOME.slice(0,25)) + tlv('60',PIX_CIDADE.slice(0,15)) + tlv('62', tlv('05','***'));
-  p += '6304';
-  return p + crc16(p);
-}
-function parseValor(t){ return parseFloat(String(t).replace(/\./g,'').replace(',','.')) || 0; }
-function fmt(v){ return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
-
-function atualizarPIX(valor){
-  const res = document.getElementById('pixResult'), qr = document.getElementById('qrcode-pix');
-  qr.innerHTML = '';
-  if (!(valor > 0)) { res.classList.remove('visible'); return; }
-  const codigo = gerarPix(valor);
-  document.getElementById('pixValueTag').textContent = fmt(valor);
-  document.getElementById('pixCodigo').value = codigo;
-  document.getElementById('pixWarn').style.display = PIX_KEY.startsWith('SUA-') ? 'block' : 'none';
-  res.classList.add('visible');
-  if (window.QRCode) new QRCode(qr, {text:codigo, width:150, height:150, correctLevel: QRCode.CorrectLevel.M});
-}
-
-function copiar(inputId, btnId){
-  const el = document.getElementById(inputId), btn = document.getElementById(btnId);
-  const done = () => { const t = btn.textContent; btn.textContent = 'Copiado ✓'; btn.classList.add('ok');
-    setTimeout(()=>{ btn.textContent = t === 'Copiado ✓' ? 'Copiar' : t; btn.classList.remove('ok'); }, 1800); };
-  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(el.value).then(done, fallback);
-  else fallback();
-  function fallback(){ el.select(); try{ document.execCommand('copy'); }catch(e){} done(); }
-}
-
-function abrirPagamento(card, nome, preco, valorInicial){
-  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  document.getElementById('modal-plano-texto').textContent = nome + ' — ' + preco;
-  const input = document.getElementById('valorPix');
-  input.value = valorInicial.toLocaleString('pt-BR',{minimumFractionDigits:2});
-  atualizarPIX(valorInicial);
-  document.getElementById('modal-overlay').style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-function fecharModal(e){ if (e.target.id === 'modal-overlay') fecharModalBtn(); }
-function fecharModalBtn(){
-  document.getElementById('modal-overlay').style.display = 'none';
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalBtn(); });
-document.getElementById('valorPix').addEventListener('input', e => {
-  e.target.value = e.target.value.replace(/[^\d.,]/g,'');
-  atualizarPIX(parseValor(e.target.value));
-});
-</script>
 </body>
 </html>
